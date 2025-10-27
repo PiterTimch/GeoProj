@@ -1,0 +1,138 @@
+** AERMAP - VERSION 24142                                              10/26/25
+**                                                                     03:05:54
+
+CO STARTING
+   TITLEONE  MARTIN'S CREEK AERMAP RUN
+   DATATYPE  DEM1
+   DATAFILE  NEWARK-W.DEM
+   DATAFILE  NEWARK-E.DEM
+   TERRHGTS  PROVIDED
+   DOMAINXY  485000  4510000  18  497000   4520000  18
+   ANCHORXY  495510   513680   495510   4513680 18  1
+   RUNORNOT  RUN
+CO FINISHED
+
+SO STARTING
+   LOCATION   STACK1  POINT  491020    515910
+   LOCATION   STACK2  POINT  491020    515910
+   LOCATION   STACK3  POINT  491123    516030
+   LOCATION   STACK4  POINT  491190    516068
+   LOCATION   STACK5  POINT  491029    516248
+   LOCATION   STACK6  POINT  491159    516314
+SO FINISHED
+
+
+
+RE STARTING
+   DISCCART   495510    513680  353.6
+   DISCCART   493900    513200  376.7
+   DISCCART   492700    513440  370.3
+   DISCCART   492440    511190  340.2
+   DISCCART   495400    515180  356.6
+   DISCCART   495300    513880  365.8
+   DISCCART   496430    514500  341.4
+
+** MET TOWER
+** DISCCART   486500    519750  243.8
+** SODAR SITE
+
+RE FINISHED
+
+
+OU STARTING
+   RECEPTOR  aermap.rec
+   SOURCLOC  aermap.src
+OU FINISHED
+
+ Exiting DEMCHK
+  
+ Finished Reading Input DEM Data
+  
+ Exiting CHKADJ
+ Exiting DOMCNV
+ Exiting RECCNV
+ Exiting SRCCNV
+ Exiting CHKEXT
+ Exiting DEMREC
+ Exiting DEMSRC
+ *** AERMAP - VERSION 24142 ***    ***  MARTIN'S CREEK AERMAP RUN                                           ***        10/26/25
+                                   ***                                                                      ***        03:05:54
+
+
+  *** Message Summary For AERMAP Setup ***
+
+ --------- Summary of Total Messages --------
+  
+ A Total of          0 Fatal Error Message(s)
+ A Total of          6 Warning Message(s)
+ A Total of          0 Informational Message(s)
+  
+  
+    ******** FATAL ERROR MESSAGES ******** 
+               ***  NONE  ***         
+  
+  
+    ********   WARNING MESSAGES   ******** 
+ SO W205      13 SOLOCA:No Option Parameter Setting.  Forced by Default to     ZS = 0.0
+ SO W205      14 SOLOCA:No Option Parameter Setting.  Forced by Default to     ZS = 0.0
+ SO W205      15 SOLOCA:No Option Parameter Setting.  Forced by Default to     ZS = 0.0
+ SO W205      16 SOLOCA:No Option Parameter Setting.  Forced by Default to     ZS = 0.0
+ SO W205      17 SOLOCA:No Option Parameter Setting.  Forced by Default to     ZS = 0.0
+ SO W205      18 SOLOCA:No Option Parameter Setting.  Forced by Default to     ZS = 0.0
+
+ ***********************************
+ *** SETUP Finishes Successfully ***
+ ***********************************
+
+ *** AERMAP - VERSION 24142 ***    ***  MARTIN'S CREEK AERMAP RUN                                           ***        10/26/25
+                                   ***                                                                      ***        03:05:54
+
+
+                                            ***     AERMAP SETUP OPTIONS SUMMARY       ***
+ - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  
+ **This Run Includes:       2  DEM File(s)
+  
+ **This Run Includes:       7  Receptor(s); and        6  Source(s)
+  
+ **The Input Receptors and Sources Were Assigned a NADA Value of  1:  North American Datum of 1927            
+
+ **The Input Receptors and Sources Are Offset:        0.00 meters East;   4000000.00 meters North
+      from the User-specified Anchor Point at:   495510.00 meters East;   4513680.00 meters North;  Zone  18
+  
+ **Terrain heights were PROVIDED by user
+  
+ **The Following Debug Output Files Have Been Automatically Generated:
+
+   DOMDETAIL.OUT - Details of User-specified Domain and Relation to DEM Files
+   MAPDETAIL.OUT - Details Regarding Input DEM Files
+   MAPPARAMS.OUT - Summary of DEM File Parameters and DEM File Adjacency
+ *** AERMAP - VERSION 24142 ***    ***  MARTIN'S CREEK AERMAP RUN                                           ***        10/26/25
+                                   ***                                                                      ***        03:05:54
+
+ *** Message Summary For AERMAP Execution ***
+
+ --------- Summary of Total Messages --------
+  
+ A Total of          0 Fatal Error Message(s)
+ A Total of          6 Warning Message(s)
+ A Total of          0 Informational Message(s)
+  
+  
+    ******** FATAL ERROR MESSAGES ******** 
+               ***  NONE  ***         
+  
+  
+    ********   WARNING MESSAGES   ******** 
+ SO W205      13 SOLOCA:No Option Parameter Setting.  Forced by Default to     ZS = 0.0
+ SO W205      14 SOLOCA:No Option Parameter Setting.  Forced by Default to     ZS = 0.0
+ SO W205      15 SOLOCA:No Option Parameter Setting.  Forced by Default to     ZS = 0.0
+ SO W205      16 SOLOCA:No Option Parameter Setting.  Forced by Default to     ZS = 0.0
+ SO W205      17 SOLOCA:No Option Parameter Setting.  Forced by Default to     ZS = 0.0
+ SO W205      18 SOLOCA:No Option Parameter Setting.  Forced by Default to     ZS = 0.0
+
+    ************************************
+    *** AERMAP Finishes Successfully ***
+    ************************************
+
