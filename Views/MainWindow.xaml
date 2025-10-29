@@ -1,0 +1,60 @@
+﻿<Window x:Class="GeoProj.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:mapsui="clr-namespace:Mapsui.UI.Wpf;assembly=Mapsui.UI.Wpf"
+        mc:Ignorable="d"
+        Title="CO₂ Visualizer" Width="1200" Height="800">
+    <Grid>
+        <mapsui:MapControl x:Name="MapControl" 
+                             Background="Black"
+                             MouseMove="MapControl_MouseMove"
+                             Info="OnMapClicked_AddSourcePoint"/>
+
+        <Border HorizontalAlignment="Right"
+                VerticalAlignment="Top"
+                Margin="15" Background="#AAFFFFFF" CornerRadius="5" Padding="10">
+
+            <StackPanel Width="200">
+                <TextBlock Text="Параметри Джерела" FontSize="14" FontWeight="Bold" Margin="0,0,0,10"/>
+
+                <TextBlock Text="Швидкість викиду (г/с):"/>
+                <TextBox Text="{Binding EmissionRate, UpdateSourceTrigger=PropertyChanged}"/>
+
+                <TextBlock Text="Висота труби (м):" Margin="0,5,0,0"/>
+                <TextBox Text="{Binding StackHeight, UpdateSourceTrigger=PropertyChanged}"/>
+
+                <TextBlock Text="Температура викиду (K):" Margin="0,5,0,0"/>
+                <TextBox Text="{Binding StackTemp, UpdateSourceTrigger=PropertyChanged}"/>
+
+                <TextBlock Text="Швидкість газів (м/с):" Margin="0,5,0,0"/>
+                <TextBox Text="{Binding StackVelocity, UpdateSourceTrigger=PropertyChanged}"/>
+
+                <TextBlock Text="Діаметр труби (м):" Margin="0,5,0,0"/>
+                <TextBox Text="{Binding StackDiameter, UpdateSourceTrigger=PropertyChanged}"/>
+
+                <TextBlock Text="Показати шар даних:" Margin="0,10,0,0"/>
+                <ComboBox ItemsSource="{Binding LayerOptions}"
+                          SelectedItem="{Binding SelectedLayerOption}"/>
+
+                <Button Content="Запустити Розрахунок" 
+                        Margin="0,15,0,0"
+                        Command="{Binding RunSimulationCommand}"/>
+
+                <ProgressBar IsIndeterminate="{Binding IsSimulationRunning}" Height="10" Margin="0,5,0,0"/>
+                <TextBlock Text="{Binding StatusText}" TextWrapping="Wrap" Margin="0,5,0,0"/>
+            </StackPanel>
+        </Border>
+
+        <Border HorizontalAlignment="Right"
+                VerticalAlignment="Bottom"
+                Margin="15" Padding="6" Background="#AA000000" CornerRadius="5">
+            <TextBlock x:Name="CoordsText"
+                       Foreground="White"
+                       FontFamily="Consolas"
+                       FontSize="12"
+                       Text="{Binding CoordsText}"/>
+        </Border>
+    </Grid>
+</Window>
