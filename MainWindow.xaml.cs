@@ -39,12 +39,24 @@ public partial class MainWindow : Window
 
     private async Task SetupMap()
     {
-        var (highFeatures, lowFeatures) = await Task.Run(() =>
+        var (highFeatures, lowFeatures) = await Task.Run(async () =>
         {
             var highList = new List<IFeature>();
             var lowList = new List<IFeature>();
 
             var buildings = BuildingLoader.LoadBuildings("Data/buildings.geojson");
+            
+            // Тест конвертації
+            //------------------------
+            var segment = buildings.Where(x => x.HeightMeters > 0).Take(20).ToList();
+
+            InputFileExporter fileExporter = new InputFileExporter
+            {
+                Buildings = segment
+            };
+
+            await fileExporter.ExportToAermodInputAsync("Output");
+            //------------------------
 
             foreach (var b in buildings)
             {
