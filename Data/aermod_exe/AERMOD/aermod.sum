@@ -1,0 +1,29 @@
+ *** AERMOD - VERSION 24142  ***   ***  Phase II Evaluation of AERMOD : Martin's Creek 1992-93              ***        10/26/25
+ *** AERMET - VERSION  24142 ***   ***  Terrain Option 2                                                    ***        03:24:35
+                                                                                                                       PAGE   1
+ *** MODELOPTs:  
+
+ *** Message Summary : AERMOD Model Execution ***
+
+  --------- Summary of Total Messages --------
+  
+ A Total of            1 Fatal Error Message(s)
+ A Total of           11 Warning Message(s)
+ A Total of            0 Informational Message(s)
+  
+  
+    ******** FATAL ERROR MESSAGES ******** 
+ CO E105       9        SETUP: Invalid Keyword Specified. The Troubled Keyword is     DOWNWASH
+  
+    ********   WARNING MESSAGES   ******** 
+ CO W361      11       COCARD: Multiyear PERIOD/ANNUAL values for NO2/SO2 require MULTYEAR Opt
+ CO W362      11       COCARD: Multiyear 1h NO2/SO2 processing not applicable for     3-hr Ave
+ CO W362      11       COCARD: Multiyear 1h NO2/SO2 processing not applicable for    24-hr Ave
+ SO W320      30        PPARM: Input Parameter May Be Out-of-Range for Parameter            QS
+ SO W320      31        PPARM: Input Parameter May Be Out-of-Range for Parameter            QS
+ SO W320      32        PPARM: Input Parameter May Be Out-of-Range for Parameter            QS
+ SO W320      33        PPARM: Input Parameter May Be Out-of-Range for Parameter            QS
+ SO W320      34        PPARM: Input Parameter May Be Out-of-Range for Parameter            QS
+ SO W320      35        PPARM: Input Parameter May Be Out-of-Range for Parameter            QS
+ SO W320      36        PPARM: Input Parameter May Be Out-of-Range for Parameter            QS
+ SO W320      37        PPARM: Input Parameter May Be Out-of-Range for Parameter            QS
