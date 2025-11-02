@@ -1,13 +1,14 @@
-** AERMAP - VERSION 24142                                              10/29/25
-**                                                                     14:30:19
+** AERMAP - VERSION 24142                                              11/02/25
+**                                                                     15:31:49
 
 CO STARTING
    TITLEONE  MARTIN'S CREEK AERMAP RUN
    DATATYPE  DEM1
+   DATAFILE  NEWARK-W.DEM
    DATAFILE  NEWARK-E.DEM
    TERRHGTS  PROVIDED
-   DOMAINXY  485000  4510000  18  497000  4520000  18
-   ANCHORXY  485000  4520000  497000  4510000  18  1
+   DOMAINXY  485000  4510000  18  497000   4520000  18
+   ANCHORXY  495510   513680   495510   4513680 18  1
    RUNORNOT  RUN
 CO FINISHED
 
@@ -47,55 +48,58 @@ OU FINISHED
   
  Finished Reading Input DEM Data
   
-  
- Error Occurred in DEMCHK
-  
- *** AERMAP - VERSION 24142 ***    ***  MARTIN'S CREEK AERMAP RUN                                           ***        10/29/25
-                                   ***                                                                      ***        14:30:19
+ Exiting CHKADJ
+ Exiting DOMCNV
+ Exiting RECCNV
+ Exiting SRCCNV
+ Exiting CHKEXT
+ Exiting DEMREC
+ Exiting DEMSRC
+ *** AERMAP - VERSION 24142 ***    ***  MARTIN'S CREEK AERMAP RUN                                           ***        11/02/25
+                                   ***                                                                      ***        15:31:49
 
 
   *** Message Summary For AERMAP Setup ***
 
  --------- Summary of Total Messages --------
   
- A Total of          3 Fatal Error Message(s)
+ A Total of          0 Fatal Error Message(s)
  A Total of          6 Warning Message(s)
  A Total of          0 Informational Message(s)
   
   
     ******** FATAL ERROR MESSAGES ******** 
- OU E510      41 DEMCHK:Fatal Error Occurs During Reading of the File          DEM#   1
- OU E510      41 DEMCHK:Fatal Error Occurs During Reading of the File          DEM#   1
- OU E510      41 DEMCHK:Fatal Error Occurs During Reading of the File          DEM#   1
+               ***  NONE  ***         
+  
   
     ********   WARNING MESSAGES   ******** 
- SO W205      12 SOLOCA:No Option Parameter Setting.  Forced by Default to     ZS = 0.0
  SO W205      13 SOLOCA:No Option Parameter Setting.  Forced by Default to     ZS = 0.0
  SO W205      14 SOLOCA:No Option Parameter Setting.  Forced by Default to     ZS = 0.0
  SO W205      15 SOLOCA:No Option Parameter Setting.  Forced by Default to     ZS = 0.0
  SO W205      16 SOLOCA:No Option Parameter Setting.  Forced by Default to     ZS = 0.0
  SO W205      17 SOLOCA:No Option Parameter Setting.  Forced by Default to     ZS = 0.0
+ SO W205      18 SOLOCA:No Option Parameter Setting.  Forced by Default to     ZS = 0.0
 
-    **************************************
-    *** SETUP Finishes UN-successfully ***
-    **************************************
+ ***********************************
+ *** SETUP Finishes Successfully ***
+ ***********************************
 
- *** AERMAP - VERSION 24142 ***    ***  MARTIN'S CREEK AERMAP RUN                                           ***        10/29/25
-                                   ***                                                                      ***        14:30:19
+ *** AERMAP - VERSION 24142 ***    ***  MARTIN'S CREEK AERMAP RUN                                           ***        11/02/25
+                                   ***                                                                      ***        15:31:49
 
 
                                             ***     AERMAP SETUP OPTIONS SUMMARY       ***
  - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   
- **This Run Includes:       1  DEM File(s)
+ **This Run Includes:       2  DEM File(s)
   
  **This Run Includes:       7  Receptor(s); and        6  Source(s)
   
  **The Input Receptors and Sources Were Assigned a NADA Value of  1:  North American Datum of 1927            
 
- **The Input Receptors and Sources Are Offset:    12000.00 meters East;    -10000.00 meters North
-      from the User-specified Anchor Point at:   497000.00 meters East;   4510000.00 meters North;  Zone  18
+ **The Input Receptors and Sources Are Offset:        0.00 meters East;   4000000.00 meters North
+      from the User-specified Anchor Point at:   495510.00 meters East;   4513680.00 meters North;  Zone  18
   
  **Terrain heights were PROVIDED by user
   
@@ -104,32 +108,31 @@ OU FINISHED
    DOMDETAIL.OUT - Details of User-specified Domain and Relation to DEM Files
    MAPDETAIL.OUT - Details Regarding Input DEM Files
    MAPPARAMS.OUT - Summary of DEM File Parameters and DEM File Adjacency
- *** AERMAP - VERSION 24142 ***    ***  MARTIN'S CREEK AERMAP RUN                                           ***        10/29/25
-                                   ***                                                                      ***        14:30:19
+ *** AERMAP - VERSION 24142 ***    ***  MARTIN'S CREEK AERMAP RUN                                           ***        11/02/25
+                                   ***                                                                      ***        15:31:49
 
  *** Message Summary For AERMAP Execution ***
 
  --------- Summary of Total Messages --------
   
- A Total of          3 Fatal Error Message(s)
+ A Total of          0 Fatal Error Message(s)
  A Total of          6 Warning Message(s)
  A Total of          0 Informational Message(s)
   
   
     ******** FATAL ERROR MESSAGES ******** 
- OU E510      41 DEMCHK:Fatal Error Occurs During Reading of the File          DEM#   1
- OU E510      41 DEMCHK:Fatal Error Occurs During Reading of the File          DEM#   1
- OU E510      41 DEMCHK:Fatal Error Occurs During Reading of the File          DEM#   1
+               ***  NONE  ***         
+  
   
     ********   WARNING MESSAGES   ******** 
- SO W205      12 SOLOCA:No Option Parameter Setting.  Forced by Default to     ZS = 0.0
  SO W205      13 SOLOCA:No Option Parameter Setting.  Forced by Default to     ZS = 0.0
  SO W205      14 SOLOCA:No Option Parameter Setting.  Forced by Default to     ZS = 0.0
  SO W205      15 SOLOCA:No Option Parameter Setting.  Forced by Default to     ZS = 0.0
  SO W205      16 SOLOCA:No Option Parameter Setting.  Forced by Default to     ZS = 0.0
  SO W205      17 SOLOCA:No Option Parameter Setting.  Forced by Default to     ZS = 0.0
+ SO W205      18 SOLOCA:No Option Parameter Setting.  Forced by Default to     ZS = 0.0
 
-    ***************************************
-    *** AERMAP Finishes UN-successfully ***
-    ***************************************
+    ************************************
+    *** AERMAP Finishes Successfully ***
+    ************************************
 
