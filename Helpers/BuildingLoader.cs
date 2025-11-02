@@ -44,7 +44,7 @@ public static class BuildingLoader
             }
             else
             {
-                height = 0;
+                height = 0; //TODO: задавати середнє значення
             }
 
             buildings.Add(new BuildingFootprint
