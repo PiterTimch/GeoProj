@@ -192,8 +192,8 @@ OU FINISHED
  *** SETUP Finishes Successfully ***
  ***********************************
 
- *** AERMOD - VERSION 24142  ***   ***  Phase II Evaluation of AERMOD : Martin's Creek 1992-93              ***        10/27/25
- *** AERMET - VERSION  24142 ***   ***  Terrain Option 2                                                    ***        14:01:00
+ *** AERMOD - VERSION 24142  ***   ***  Phase II Evaluation of AERMOD : Martin's Creek 1992-93              ***        11/09/25
+ *** AERMET - VERSION  24142 ***   ***  Terrain Option 2                                                    ***        08:17:17
                                                                                                                        PAGE   1
  *** MODELOPTs:    RegDFAULT  CONC  ELEV  RURAL
 
@@ -263,8 +263,8 @@ OU FINISHED
 
  **Detailed Error/Message File:   ERRORS.OUT                                                                                      
  **File for Summary of Results:   aermod.sum                                                                                      
- *** AERMOD - VERSION 24142  ***   ***  Phase II Evaluation of AERMOD : Martin's Creek 1992-93              ***        10/27/25
- *** AERMET - VERSION  24142 ***   ***  Terrain Option 2                                                    ***        14:01:00
+ *** AERMOD - VERSION 24142  ***   ***  Phase II Evaluation of AERMOD : Martin's Creek 1992-93              ***        11/09/25
+ *** AERMET - VERSION  24142 ***   ***  Terrain Option 2                                                    ***        08:17:17
                                                                                                                        PAGE   2
  *** MODELOPTs:    RegDFAULT  CONC  ELEV  RURAL
 
@@ -284,8 +284,8 @@ OU FINISHED
  HL2              0   0.00000E+00  494050.0  521040.0   103.6    59.40    -0.00     0.00     2.70    NO      NO    NO  HOURLY 
  WC1              0   0.00000E+00  498950.0  518500.0   173.7    76.20    -0.00     0.00     1.87    NO      NO    NO  HOURLY 
  WC2              0   0.00000E+00  498950.0  518500.0   173.7    76.20    -0.00     0.00     1.87    NO      NO    NO  HOURLY 
- *** AERMOD - VERSION 24142  ***   ***  Phase II Evaluation of AERMOD : Martin's Creek 1992-93              ***        10/27/25
- *** AERMET - VERSION  24142 ***   ***  Terrain Option 2                                                    ***        14:01:00
+ *** AERMOD - VERSION 24142  ***   ***  Phase II Evaluation of AERMOD : Martin's Creek 1992-93              ***        11/09/25
+ *** AERMET - VERSION  24142 ***   ***  Terrain Option 2                                                    ***        08:17:17
                                                                                                                        PAGE   3
  *** MODELOPTs:    RegDFAULT  CONC  ELEV  RURAL
 
@@ -297,8 +297,8 @@ OU FINISHED
 
 
   ALL        MC12        , MC3         , MC4         , ED1         , ED2         , HL2         , WC1         , WC2         ,
- *** AERMOD - VERSION 24142  ***   ***  Phase II Evaluation of AERMOD : Martin's Creek 1992-93              ***        10/27/25
- *** AERMET - VERSION  24142 ***   ***  Terrain Option 2                                                    ***        14:01:00
+ *** AERMOD - VERSION 24142  ***   ***  Phase II Evaluation of AERMOD : Martin's Creek 1992-93              ***        11/09/25
+ *** AERMET - VERSION  24142 ***   ***  Terrain Option 2                                                    ***        08:17:17
                                                                                                                        PAGE   4
  *** MODELOPTs:    RegDFAULT  CONC  ELEV  RURAL
 
@@ -370,8 +370,8 @@ OU FINISHED
    33    0.0,    0.0,    0.0,    0.0,    0.0,     34   90.0,  191.1,  110.6,  177.4,   18.0,
    35   90.0,  200.1,  137.9,  157.1,   58.1,     36   90.0,  203.0,  161.0,  132.0,   96.5,
 
- *** AERMOD - VERSION 24142  ***   ***  Phase II Evaluation of AERMOD : Martin's Creek 1992-93              ***        10/27/25
- *** AERMET - VERSION  24142 ***   ***  Terrain Option 2                                                    ***        14:01:00
+ *** AERMOD - VERSION 24142  ***   ***  Phase II Evaluation of AERMOD : Martin's Creek 1992-93              ***        11/09/25
+ *** AERMET - VERSION  24142 ***   ***  Terrain Option 2                                                    ***        08:17:17
                                                                                                                        PAGE   5
  *** MODELOPTs:    RegDFAULT  CONC  ELEV  RURAL
 
@@ -383,8 +383,8 @@ OU FINISHED
      ( 492700.0,  513440.0,     370.3,     370.3,       0.0);         ( 492440.0,  511190.0,     340.2,     340.2,       0.0);      
      ( 495400.0,  515180.0,     356.6,     356.6,       0.0);         ( 495300.0,  513880.0,     365.8,     365.8,       0.0);      
      ( 496430.0,  514500.0,     341.4,     341.4,       0.0);                                                                       
- *** AERMOD - VERSION 24142  ***   ***  Phase II Evaluation of AERMOD : Martin's Creek 1992-93              ***        10/27/25
- *** AERMET - VERSION  24142 ***   ***  Terrain Option 2                                                    ***        14:01:00
+ *** AERMOD - VERSION 24142  ***   ***  Phase II Evaluation of AERMOD : Martin's Creek 1992-93              ***        11/09/25
+ *** AERMET - VERSION  24142 ***   ***  Terrain Option 2                                                    ***        08:17:17
                                                                                                                        PAGE   6
  *** MODELOPTs:    RegDFAULT  CONC  ELEV  RURAL
 
@@ -408,8 +408,8 @@ OU FINISHED
                                                             (METERS/SEC)
 
                                                  1.54,   3.09,   5.14,   8.23,  10.80,
- *** AERMOD - VERSION 24142  ***   ***  Phase II Evaluation of AERMOD : Martin's Creek 1992-93              ***        10/27/25
- *** AERMET - VERSION  24142 ***   ***  Terrain Option 2                                                    ***        14:01:00
+ *** AERMOD - VERSION 24142  ***   ***  Phase II Evaluation of AERMOD : Martin's Creek 1992-93              ***        11/09/25
+ *** AERMET - VERSION  24142 ***   ***  Terrain Option 2                                                    ***        08:17:17
                                                                                                                        PAGE   7
  *** MODELOPTs:    RegDFAULT  CONC  ELEV  RURAL
 
@@ -450,8 +450,8 @@ OU FINISHED
  92 05 01 122 22  -15.6  0.284 -9.000 -9.000 -999.  364.    131.6  0.50   0.50   1.00    2.40  240.   10.0  287.1   10.0
  92 05 01 122 23  -12.1  0.221 -9.000 -9.000 -999.  250.     79.1  0.50   0.50   1.00    2.00  210.   10.0  287.1   10.0
  92 05 01 122 24   -9.0  0.164 -9.000 -9.000 -999.  161.     43.8  0.50   0.50   1.00    1.70  220.   10.0  286.1   10.0
- *** AERMOD - VERSION 24142  ***   ***  Phase II Evaluation of AERMOD : Martin's Creek 1992-93              ***        10/27/25
- *** AERMET - VERSION  24142 ***   ***  Terrain Option 2                                                    ***        14:01:00
+ *** AERMOD - VERSION 24142  ***   ***  Phase II Evaluation of AERMOD : Martin's Creek 1992-93              ***        11/09/25
+ *** AERMET - VERSION  24142 ***   ***  Terrain Option 2                                                    ***        08:17:17
                                                                                                                        PAGE   8
  *** MODELOPTs:    RegDFAULT  CONC  ELEV  RURAL
 
@@ -473,8 +473,8 @@ OU FINISHED
  92 05 01 01  420.0 1 -999.  -99.00  -999.0  999.0  -99.00  -99.00
 
  F indicates top of profile (=1) or below (=0)
- *** AERMOD - VERSION 24142  ***   ***  Phase II Evaluation of AERMOD : Martin's Creek 1992-93              ***        10/27/25
- *** AERMET - VERSION  24142 ***   ***  Terrain Option 2                                                    ***        14:01:00
+ *** AERMOD - VERSION 24142  ***   ***  Phase II Evaluation of AERMOD : Martin's Creek 1992-93              ***        11/09/25
+ *** AERMET - VERSION  24142 ***   ***  Terrain Option 2                                                    ***        08:17:17
                                                                                                                        PAGE   9
  *** MODELOPTs:    RegDFAULT  CONC  ELEV  RURAL
 
@@ -492,8 +492,8 @@ OU FINISHED
          492700.00     513440.00       10.69113                      492440.00     511190.00        5.57931                         
          495400.00     515180.00        7.86971                      495300.00     513880.00        7.25671                         
          496430.00     514500.00        6.02304                                                                                     
- *** AERMOD - VERSION 24142  ***   ***  Phase II Evaluation of AERMOD : Martin's Creek 1992-93              ***        10/27/25
- *** AERMET - VERSION  24142 ***   ***  Terrain Option 2                                                    ***        14:01:00
+ *** AERMOD - VERSION 24142  ***   ***  Phase II Evaluation of AERMOD : Martin's Creek 1992-93              ***        11/09/25
+ *** AERMET - VERSION  24142 ***   ***  Terrain Option 2                                                    ***        08:17:17
                                                                                                                        PAGE  10
  *** MODELOPTs:    RegDFAULT  CONC  ELEV  RURAL
 
@@ -511,8 +511,8 @@ OU FINISHED
         492700.00    513440.00     1126.47977  (92070923)                492440.00    511190.00      899.28148  (93011620)          
         495400.00    515180.00      831.28584  (92070920)                495300.00    513880.00      416.61675  (93011619)          
         496430.00    514500.00      495.84943  (93022406)                                                                           
- *** AERMOD - VERSION 24142  ***   ***  Phase II Evaluation of AERMOD : Martin's Creek 1992-93              ***        10/27/25
- *** AERMET - VERSION  24142 ***   ***  Terrain Option 2                                                    ***        14:01:00
+ *** AERMOD - VERSION 24142  ***   ***  Phase II Evaluation of AERMOD : Martin's Creek 1992-93              ***        11/09/25
+ *** AERMET - VERSION  24142 ***   ***  Terrain Option 2                                                    ***        08:17:17
                                                                                                                        PAGE  11
  *** MODELOPTs:    RegDFAULT  CONC  ELEV  RURAL
 
@@ -530,8 +530,8 @@ OU FINISHED
         492700.00    513440.00      780.13975  (93051122)                492440.00    511190.00      389.49378  (92062103)          
         495400.00    515180.00      774.02781  (93022406)                495300.00    513880.00      415.04287  (93030920)          
         496430.00    514500.00      448.72760  (93011920)                                                                           
- *** AERMOD - VERSION 24142  ***   ***  Phase II Evaluation of AERMOD : Martin's Creek 1992-93              ***        10/27/25
- *** AERMET - VERSION  24142 ***   ***  Terrain Option 2                                                    ***        14:01:00
+ *** AERMOD - VERSION 24142  ***   ***  Phase II Evaluation of AERMOD : Martin's Creek 1992-93              ***        11/09/25
+ *** AERMET - VERSION  24142 ***   ***  Terrain Option 2                                                    ***        08:17:17
                                                                                                                        PAGE  12
  *** MODELOPTs:    RegDFAULT  CONC  ELEV  RURAL
 
@@ -549,8 +549,8 @@ OU FINISHED
         492700.00    513440.00      443.06774  (92070924)                492440.00    511190.00      336.23073  (93011621)          
         495400.00    515180.00      319.26346  (93022406)                495300.00    513880.00      286.72529  (92120806)          
         496430.00    514500.00      241.05768  (93022406)                                                                           
- *** AERMOD - VERSION 24142  ***   ***  Phase II Evaluation of AERMOD : Martin's Creek 1992-93              ***        10/27/25
- *** AERMET - VERSION  24142 ***   ***  Terrain Option 2                                                    ***        14:01:00
+ *** AERMOD - VERSION 24142  ***   ***  Phase II Evaluation of AERMOD : Martin's Creek 1992-93              ***        11/09/25
+ *** AERMET - VERSION  24142 ***   ***  Terrain Option 2                                                    ***        08:17:17
                                                                                                                        PAGE  13
  *** MODELOPTs:    RegDFAULT  CONC  ELEV  RURAL
 
@@ -568,8 +568,8 @@ OU FINISHED
         492700.00    513440.00      436.51710  (93021421)                492440.00    511190.00      183.06178  (92062103)          
         495400.00    515180.00      309.92380  (92070921)                495300.00    513880.00      219.61940  (93022503)          
         496430.00    514500.00      163.22613  (93011921)                                                                           
- *** AERMOD - VERSION 24142  ***   ***  Phase II Evaluation of AERMOD : Martin's Creek 1992-93              ***        10/27/25
- *** AERMET - VERSION  24142 ***   ***  Terrain Option 2                                                    ***        14:01:00
+ *** AERMOD - VERSION 24142  ***   ***  Phase II Evaluation of AERMOD : Martin's Creek 1992-93              ***        11/09/25
+ *** AERMET - VERSION  24142 ***   ***  Terrain Option 2                                                    ***        08:17:17
                                                                                                                        PAGE  14
  *** MODELOPTs:    RegDFAULT  CONC  ELEV  RURAL
 
@@ -587,8 +587,8 @@ OU FINISHED
         492700.00    513440.00      134.72696c (92101924)                492440.00    511190.00       64.11129  (93020224)          
         495400.00    515180.00      100.50665  (93022424)                495300.00    513880.00       78.20017  (93030924)          
         496430.00    514500.00       66.19717  (93022424)                                                                           
- *** AERMOD - VERSION 24142  ***   ***  Phase II Evaluation of AERMOD : Martin's Creek 1992-93              ***        10/27/25
- *** AERMET - VERSION  24142 ***   ***  Terrain Option 2                                                    ***        14:01:00
+ *** AERMOD - VERSION 24142  ***   ***  Phase II Evaluation of AERMOD : Martin's Creek 1992-93              ***        11/09/25
+ *** AERMET - VERSION  24142 ***   ***  Terrain Option 2                                                    ***        08:17:17
                                                                                                                        PAGE  15
  *** MODELOPTs:    RegDFAULT  CONC  ELEV  RURAL
 
@@ -606,8 +606,8 @@ OU FINISHED
         492700.00    513440.00      118.14122  (92102724)                492440.00    511190.00       54.81696  (93011624)          
         495400.00    515180.00       68.29118  (92111524)                495300.00    513880.00       71.81655  (92120824)          
         496430.00    514500.00       42.28640  (92071124)                                                                           
- *** AERMOD - VERSION 24142  ***   ***  Phase II Evaluation of AERMOD : Martin's Creek 1992-93              ***        10/27/25
- *** AERMET - VERSION  24142 ***   ***  Terrain Option 2                                                    ***        14:01:00
+ *** AERMOD - VERSION 24142  ***   ***  Phase II Evaluation of AERMOD : Martin's Creek 1992-93              ***        11/09/25
+ *** AERMET - VERSION  24142 ***   ***  Terrain Option 2                                                    ***        08:17:17
                                                                                                                        PAGE  16
  *** MODELOPTs:    RegDFAULT  CONC  ELEV  RURAL
 
@@ -659,8 +659,8 @@ OU FINISHED
    38.     447.03474 (93020418) AT ( 493900.00,  513200.00)  DC       78.     372.84862 (93022304) AT ( 495400.00,  515180.00)  DC
    39.     446.20874 (93011619) AT ( 495400.00,  515180.00)  DC       79.     371.35804 (92103017) AT ( 495400.00,  515180.00)  DC
    40.     444.29759 (92112320) AT ( 492700.00,  513440.00)  DC       80.     369.34387 (92120822) AT ( 496430.00,  514500.00)  DC
- *** AERMOD - VERSION 24142  ***   ***  Phase II Evaluation of AERMOD : Martin's Creek 1992-93              ***        10/27/25
- *** AERMET - VERSION  24142 ***   ***  Terrain Option 2                                                    ***        14:01:00
+ *** AERMOD - VERSION 24142  ***   ***  Phase II Evaluation of AERMOD : Martin's Creek 1992-93              ***        11/09/25
+ *** AERMET - VERSION  24142 ***   ***  Terrain Option 2                                                    ***        08:17:17
                                                                                                                        PAGE  17
  *** MODELOPTs:    RegDFAULT  CONC  ELEV  RURAL
 
@@ -712,8 +712,8 @@ OU FINISHED
   118.     323.05423 (92072010) AT ( 496430.00,  514500.00)  DC      158.     288.79123 (92102518) AT ( 492700.00,  513440.00)  DC
   119.     320.79391 (93022407) AT ( 495400.00,  515180.00)  DC      159.     288.52376 (92070921) AT ( 493900.00,  513200.00)  DC
   120.     318.52161 (93021905) AT ( 493900.00,  513200.00)  DC      160.     286.99264 (93011619) AT ( 496430.00,  514500.00)  DC
- *** AERMOD - VERSION 24142  ***   ***  Phase II Evaluation of AERMOD : Martin's Creek 1992-93              ***        10/27/25
- *** AERMET - VERSION  24142 ***   ***  Terrain Option 2                                                    ***        14:01:00
+ *** AERMOD - VERSION 24142  ***   ***  Phase II Evaluation of AERMOD : Martin's Creek 1992-93              ***        11/09/25
+ *** AERMET - VERSION  24142 ***   ***  Terrain Option 2                                                    ***        08:17:17
                                                                                                                        PAGE  18
  *** MODELOPTs:    RegDFAULT  CONC  ELEV  RURAL
 
@@ -765,8 +765,8 @@ OU FINISHED
   198.     263.22095 (93011703) AT ( 493900.00,  513200.00)  DC      238.     238.96176 (92110605) AT ( 495510.00,  513680.00)  DC
   199.     262.86474 (92100208) AT ( 495400.00,  515180.00)  DC      239.     238.69344 (92082707) AT ( 492700.00,  513440.00)  DC
   200.     262.06105 (92070921) AT ( 492700.00,  513440.00)  DC      240.     238.46437 (92050422) AT ( 492440.00,  511190.00)  DC
- *** AERMOD - VERSION 24142  ***   ***  Phase II Evaluation of AERMOD : Martin's Creek 1992-93              ***        10/27/25
- *** AERMET - VERSION  24142 ***   ***  Terrain Option 2                                                    ***        14:01:00
+ *** AERMOD - VERSION 24142  ***   ***  Phase II Evaluation of AERMOD : Martin's Creek 1992-93              ***        11/09/25
+ *** AERMET - VERSION  24142 ***   ***  Terrain Option 2                                                    ***        08:17:17
                                                                                                                        PAGE  19
  *** MODELOPTs:    RegDFAULT  CONC  ELEV  RURAL
 
@@ -818,8 +818,8 @@ OU FINISHED
   278.     221.10286 (93012003) AT ( 495400.00,  515180.00)  DC      318.     204.78040 (92110601) AT ( 493900.00,  513200.00)  DC
   279.     220.12704 (92120404) AT ( 493900.00,  513200.00)  DC      319.     204.69839 (93031419) AT ( 495300.00,  513880.00)  DC
   280.     220.11181 (92120521) AT ( 493900.00,  513200.00)  DC      320.     204.61155 (92111522) AT ( 495400.00,  515180.00)  DC
- *** AERMOD - VERSION 24142  ***   ***  Phase II Evaluation of AERMOD : Martin's Creek 1992-93              ***        10/27/25
- *** AERMET - VERSION  24142 ***   ***  Terrain Option 2                                                    ***        14:01:00
+ *** AERMOD - VERSION 24142  ***   ***  Phase II Evaluation of AERMOD : Martin's Creek 1992-93              ***        11/09/25
+ *** AERMET - VERSION  24142 ***   ***  Terrain Option 2                                                    ***        08:17:17
                                                                                                                        PAGE  20
  *** MODELOPTs:    RegDFAULT  CONC  ELEV  RURAL
 
@@ -876,8 +876,8 @@ OU FINISHED
                        GP = GRIDPOLR
                        DC = DISCCART
                        DP = DISCPOLR
- *** AERMOD - VERSION 24142  ***   ***  Phase II Evaluation of AERMOD : Martin's Creek 1992-93              ***        10/27/25
- *** AERMET - VERSION  24142 ***   ***  Terrain Option 2                                                    ***        14:01:00
+ *** AERMOD - VERSION 24142  ***   ***  Phase II Evaluation of AERMOD : Martin's Creek 1992-93              ***        11/09/25
+ *** AERMET - VERSION  24142 ***   ***  Terrain Option 2                                                    ***        08:17:17
                                                                                                                        PAGE  21
  *** MODELOPTs:    RegDFAULT  CONC  ELEV  RURAL
 
@@ -929,8 +929,8 @@ OU FINISHED
    38.     224.32577 (92102524) AT ( 493900.00,  513200.00)  DC       78.     175.67001 (93030921) AT ( 495300.00,  513880.00)  DC
    39.     222.68237 (93020118) AT ( 492700.00,  513440.00)  DC       79.     175.10053 (93030921) AT ( 495510.00,  513680.00)  DC
    40.     221.17939 (93010518) AT ( 492700.00,  513440.00)  DC       80.     173.38087 (93011921) AT ( 495510.00,  513680.00)  DC
- *** AERMOD - VERSION 24142  ***   ***  Phase II Evaluation of AERMOD : Martin's Creek 1992-93              ***        10/27/25
- *** AERMET - VERSION  24142 ***   ***  Terrain Option 2                                                    ***        14:01:00
+ *** AERMOD - VERSION 24142  ***   ***  Phase II Evaluation of AERMOD : Martin's Creek 1992-93              ***        11/09/25
+ *** AERMET - VERSION  24142 ***   ***  Terrain Option 2                                                    ***        08:17:17
                                                                                                                        PAGE  22
  *** MODELOPTs:    RegDFAULT  CONC  ELEV  RURAL
 
@@ -982,8 +982,8 @@ OU FINISHED
   118.     144.20128 (93020403) AT ( 495300.00,  513880.00)  DC      158.     127.91341 (93020403) AT ( 495510.00,  513680.00)  DC
   119.     142.76162 (93020124) AT ( 492440.00,  511190.00)  DC      159.     127.59510 (92081406) AT ( 492440.00,  511190.00)  DC
   120.     142.69221 (93030703) AT ( 495400.00,  515180.00)  DC      160.     127.04809 (93042315) AT ( 492700.00,  513440.00)  DC
- *** AERMOD - VERSION 24142  ***   ***  Phase II Evaluation of AERMOD : Martin's Creek 1992-93              ***        10/27/25
- *** AERMET - VERSION  24142 ***   ***  Terrain Option 2                                                    ***        14:01:00
+ *** AERMOD - VERSION 24142  ***   ***  Phase II Evaluation of AERMOD : Martin's Creek 1992-93              ***        11/09/25
+ *** AERMET - VERSION  24142 ***   ***  Terrain Option 2                                                    ***        08:17:17
                                                                                                                        PAGE  23
  *** MODELOPTs:    RegDFAULT  CONC  ELEV  RURAL
 
@@ -1035,8 +1035,8 @@ OU FINISHED
   198.     118.45276 (92111421) AT ( 495400.00,  515180.00)  DC      238.     110.14171 (92071106) AT ( 496430.00,  514500.00)  DC
   199.     118.36466 (93012021) AT ( 495300.00,  513880.00)  DC      239.     109.92019 (92111603) AT ( 495400.00,  515180.00)  DC
   200.     118.17423 (92080506) AT ( 495400.00,  515180.00)  DC      240.     109.55023 (93031009) AT ( 492700.00,  513440.00)  DC
- *** AERMOD - VERSION 24142  ***   ***  Phase II Evaluation of AERMOD : Martin's Creek 1992-93              ***        10/27/25
- *** AERMET - VERSION  24142 ***   ***  Terrain Option 2                                                    ***        14:01:00
+ *** AERMOD - VERSION 24142  ***   ***  Phase II Evaluation of AERMOD : Martin's Creek 1992-93              ***        11/09/25
+ *** AERMET - VERSION  24142 ***   ***  Terrain Option 2                                                    ***        08:17:17
                                                                                                                        PAGE  24
  *** MODELOPTs:    RegDFAULT  CONC  ELEV  RURAL
 
@@ -1088,8 +1088,8 @@ OU FINISHED
   278.      99.41413c(92092803) AT ( 492440.00,  511190.00)  DC      318.      94.28544 (92072115) AT ( 493900.00,  513200.00)  DC
   279.      99.36424 (93010124) AT ( 493900.00,  513200.00)  DC      319.      94.22717 (93020421) AT ( 493900.00,  513200.00)  DC
   280.      99.16865 (92062521) AT ( 496430.00,  514500.00)  DC      320.      93.60432 (93021824) AT ( 493900.00,  513200.00)  DC
- *** AERMOD - VERSION 24142  ***   ***  Phase II Evaluation of AERMOD : Martin's Creek 1992-93              ***        10/27/25
- *** AERMET - VERSION  24142 ***   ***  Terrain Option 2                                                    ***        14:01:00
+ *** AERMOD - VERSION 24142  ***   ***  Phase II Evaluation of AERMOD : Martin's Creek 1992-93              ***        11/09/25
+ *** AERMET - VERSION  24142 ***   ***  Terrain Option 2                                                    ***        08:17:17
                                                                                                                        PAGE  25
  *** MODELOPTs:    RegDFAULT  CONC  ELEV  RURAL
 
@@ -1146,8 +1146,8 @@ OU FINISHED
                        GP = GRIDPOLR
                        DC = DISCCART
                        DP = DISCPOLR
- *** AERMOD - VERSION 24142  ***   ***  Phase II Evaluation of AERMOD : Martin's Creek 1992-93              ***        10/27/25
- *** AERMET - VERSION  24142 ***   ***  Terrain Option 2                                                    ***        14:01:00
+ *** AERMOD - VERSION 24142  ***   ***  Phase II Evaluation of AERMOD : Martin's Creek 1992-93              ***        11/09/25
+ *** AERMET - VERSION  24142 ***   ***  Terrain Option 2                                                    ***        08:17:17
                                                                                                                        PAGE  26
  *** MODELOPTs:    RegDFAULT  CONC  ELEV  RURAL
 
@@ -1199,8 +1199,8 @@ OU FINISHED
    38.      53.45260 (92122424) AT ( 492700.00,  513440.00)  DC       78.      40.06124 (93022424) AT ( 495510.00,  513680.00)  DC
    39.      53.28609 (93022524) AT ( 492700.00,  513440.00)  DC       79.      39.92606 (93012824) AT ( 493900.00,  513200.00)  DC
    40.      53.16379 (93012624) AT ( 492700.00,  513440.00)  DC       80.      39.85598 (92120324) AT ( 495300.00,  513880.00)  DC
- *** AERMOD - VERSION 24142  ***   ***  Phase II Evaluation of AERMOD : Martin's Creek 1992-93              ***        10/27/25
- *** AERMET - VERSION  24142 ***   ***  Terrain Option 2                                                    ***        14:01:00
+ *** AERMOD - VERSION 24142  ***   ***  Phase II Evaluation of AERMOD : Martin's Creek 1992-93              ***        11/09/25
+ *** AERMET - VERSION  24142 ***   ***  Terrain Option 2                                                    ***        08:17:17
                                                                                                                        PAGE  27
  *** MODELOPTs:    RegDFAULT  CONC  ELEV  RURAL
 
@@ -1252,8 +1252,8 @@ OU FINISHED
   118.      34.76337 (92090124) AT ( 493900.00,  513200.00)  DC      158.      30.89723 (92110624) AT ( 495510.00,  513680.00)  DC
   119.      34.74761 (92082724) AT ( 495300.00,  513880.00)  DC      159.      30.87731 (92083124) AT ( 496430.00,  514500.00)  DC
   120.      34.65176 (93012324) AT ( 495400.00,  515180.00)  DC      160.      30.85991 (92062524) AT ( 495510.00,  513680.00)  DC
- *** AERMOD - VERSION 24142  ***   ***  Phase II Evaluation of AERMOD : Martin's Creek 1992-93              ***        10/27/25
- *** AERMET - VERSION  24142 ***   ***  Terrain Option 2                                                    ***        14:01:00
+ *** AERMOD - VERSION 24142  ***   ***  Phase II Evaluation of AERMOD : Martin's Creek 1992-93              ***        11/09/25
+ *** AERMET - VERSION  24142 ***   ***  Terrain Option 2                                                    ***        08:17:17
                                                                                                                        PAGE  28
  *** MODELOPTs:    RegDFAULT  CONC  ELEV  RURAL
 
@@ -1305,8 +1305,8 @@ OU FINISHED
   198.      26.57725 (93031224) AT ( 493900.00,  513200.00)  DC      238.      23.15768 (92121524) AT ( 493900.00,  513200.00)  DC
   199.      26.48053 (93020424) AT ( 495510.00,  513680.00)  DC      239.      23.12583 (92082624) AT ( 495300.00,  513880.00)  DC
   200.      26.47851 (92062124) AT ( 495300.00,  513880.00)  DC      240.      23.04834 (92070724) AT ( 492700.00,  513440.00)  DC
- *** AERMOD - VERSION 24142  ***   ***  Phase II Evaluation of AERMOD : Martin's Creek 1992-93              ***        10/27/25
- *** AERMET - VERSION  24142 ***   ***  Terrain Option 2                                                    ***        14:01:00
+ *** AERMOD - VERSION 24142  ***   ***  Phase II Evaluation of AERMOD : Martin's Creek 1992-93              ***        11/09/25
+ *** AERMET - VERSION  24142 ***   ***  Terrain Option 2                                                    ***        08:17:17
                                                                                                                        PAGE  29
  *** MODELOPTs:    RegDFAULT  CONC  ELEV  RURAL
 
@@ -1358,8 +1358,8 @@ OU FINISHED
   278.      21.06958 (93031224) AT ( 495300.00,  513880.00)  DC      318.      19.09679 (92082124) AT ( 492700.00,  513440.00)  DC
   279.      21.02770 (93031524) AT ( 495510.00,  513680.00)  DC      319.      19.09419 (92072124) AT ( 495300.00,  513880.00)  DC
   280.      20.92660 (92121524) AT ( 495400.00,  515180.00)  DC      320.      19.04072 (93012924) AT ( 496430.00,  514500.00)  DC
- *** AERMOD - VERSION 24142  ***   ***  Phase II Evaluation of AERMOD : Martin's Creek 1992-93              ***        10/27/25
- *** AERMET - VERSION  24142 ***   ***  Terrain Option 2                                                    ***        14:01:00
+ *** AERMOD - VERSION 24142  ***   ***  Phase II Evaluation of AERMOD : Martin's Creek 1992-93              ***        11/09/25
+ *** AERMET - VERSION  24142 ***   ***  Terrain Option 2                                                    ***        08:17:17
                                                                                                                        PAGE  30
  *** MODELOPTs:    RegDFAULT  CONC  ELEV  RURAL
 
@@ -1416,8 +1416,8 @@ OU FINISHED
                        GP = GRIDPOLR
                        DC = DISCCART
                        DP = DISCPOLR
- *** AERMOD - VERSION 24142  ***   ***  Phase II Evaluation of AERMOD : Martin's Creek 1992-93              ***        10/27/25
- *** AERMET - VERSION  24142 ***   ***  Terrain Option 2                                                    ***        14:01:00
+ *** AERMOD - VERSION 24142  ***   ***  Phase II Evaluation of AERMOD : Martin's Creek 1992-93              ***        11/09/25
+ *** AERMET - VERSION  24142 ***   ***  Terrain Option 2                                                    ***        08:17:17
                                                                                                                        PAGE  31
  *** MODELOPTs:    RegDFAULT  CONC  ELEV  RURAL
 
@@ -1446,8 +1446,8 @@ ALL       1ST HIGHEST VALUE IS      10.69113 AT (  492700.00,   513440.00,   370
                       GP = GRIDPOLR
                       DC = DISCCART
                       DP = DISCPOLR
- *** AERMOD - VERSION 24142  ***   ***  Phase II Evaluation of AERMOD : Martin's Creek 1992-93              ***        10/27/25
- *** AERMET - VERSION  24142 ***   ***  Terrain Option 2                                                    ***        14:01:00
+ *** AERMOD - VERSION 24142  ***   ***  Phase II Evaluation of AERMOD : Martin's Creek 1992-93              ***        11/09/25
+ *** AERMET - VERSION  24142 ***   ***  Terrain Option 2                                                    ***        08:17:17
                                                                                                                        PAGE  32
  *** MODELOPTs:    RegDFAULT  CONC  ELEV  RURAL
 
@@ -1468,8 +1468,8 @@ ALL      HIGH   1ST HIGH VALUE IS    1126.47977  ON 92070923: AT (  492700.00,  
                       GP = GRIDPOLR
                       DC = DISCCART
                       DP = DISCPOLR
- *** AERMOD - VERSION 24142  ***   ***  Phase II Evaluation of AERMOD : Martin's Creek 1992-93              ***        10/27/25
- *** AERMET - VERSION  24142 ***   ***  Terrain Option 2                                                    ***        14:01:00
+ *** AERMOD - VERSION 24142  ***   ***  Phase II Evaluation of AERMOD : Martin's Creek 1992-93              ***        11/09/25
+ *** AERMET - VERSION  24142 ***   ***  Terrain Option 2                                                    ***        08:17:17
                                                                                                                        PAGE  33
  *** MODELOPTs:    RegDFAULT  CONC  ELEV  RURAL
 
@@ -1490,8 +1490,8 @@ ALL      HIGH   1ST HIGH VALUE IS     513.44847  ON 93022421: AT (  493900.00,  
                       GP = GRIDPOLR
                       DC = DISCCART
                       DP = DISCPOLR
- *** AERMOD - VERSION 24142  ***   ***  Phase II Evaluation of AERMOD : Martin's Creek 1992-93              ***        10/27/25
- *** AERMET - VERSION  24142 ***   ***  Terrain Option 2                                                    ***        14:01:00
+ *** AERMOD - VERSION 24142  ***   ***  Phase II Evaluation of AERMOD : Martin's Creek 1992-93              ***        11/09/25
+ *** AERMET - VERSION  24142 ***   ***  Terrain Option 2                                                    ***        08:17:17
                                                                                                                        PAGE  34
  *** MODELOPTs:    RegDFAULT  CONC  ELEV  RURAL
 
@@ -1512,8 +1512,8 @@ ALL      HIGH   1ST HIGH VALUE IS     134.72696c ON 92101924: AT (  492700.00,  
                       GP = GRIDPOLR
                       DC = DISCCART
                       DP = DISCPOLR
- *** AERMOD - VERSION 24142  ***   ***  Phase II Evaluation of AERMOD : Martin's Creek 1992-93              ***        10/27/25
- *** AERMET - VERSION  24142 ***   ***  Terrain Option 2                                                    ***        14:01:00
+ *** AERMOD - VERSION 24142  ***   ***  Phase II Evaluation of AERMOD : Martin's Creek 1992-93              ***        11/09/25
+ *** AERMET - VERSION  24142 ***   ***  Terrain Option 2                                                    ***        08:17:17
                                                                                                                        PAGE  35
  *** MODELOPTs:    RegDFAULT  CONC  ELEV  RURAL
 
