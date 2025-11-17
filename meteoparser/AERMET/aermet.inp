@@ -1,0 +1,43 @@
+job
+  messages  aermet_st1.msg
+  report    aermet_st1.rpt
+  
+upperair
+**          Upper air data for Ternopil from ERA5
+  data      ternopil_upper.fsl  fsl
+  extract   ternopil_upper.iqa
+  location  999999  49.55n  25.60e  5 324.0
+  xdates    2025/01/01 to 2025/01/02
+  qaout     ternopil_upper.oqa
+
+surface
+**           Surface data for Ternopil from ERA5
+   data      ternopil_surface.dat  CD144
+   extract   ternopil_surf.iqa
+   qaout     ternopil_surf.oqa
+   location  999999 49.55N 25.60E 0
+   xdates    2025/01/01 TO 2025/01/02
+
+onsite
+  data      ternopil_onsite.dat
+
+  location  000001   49.55n  25.60e  0
+
+  xdates    2025/01/01  2025/01/02
+  qaout     ternopil_onsite.oqa
+  read      1  osyr  osmo  osdy  oshr
+  read      2  HT01  WD01  WS01  SA01  TT01
+                         
+  format    1  ( 2X,I2,I4,I4,I4 )
+  format    2  ( 5F10.4 )
+
+  threshold 0.3
+
+  range     tt    -30 <=  35  999
+  range     ws      0 <   50  999
+  range     wd      0 <= 360  999
+  range     sa      0 <= 360  999
+
+  audit     sa
+
+end

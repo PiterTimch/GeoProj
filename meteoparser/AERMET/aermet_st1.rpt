@@ -1,0 +1,112 @@
+ AERMET_SETUP
+ UN-SUCCESSFUL
+
+ AERMET VERSION  24142
+
+ START PROCESSING DATE/TIME: NOVEMBER 11, 2025  10:31:20 AM
+
+ RUNSTREAM CONTROL FILE: aermet.inp
+
+
+ ****************************  INPUT SUMMARY **************************** 
+
+ PROCESSING STAGES 1
+
+
+
+ 1.  JOB FILE NAMES
+
+ MESSAGES   OPEN     aermet_st1.msg
+ REPORT     OPEN     aermet_st1.rpt
+ DEBUG      NO FILE
+
+
+
+ 2. UPPERAIR DATA
+
+ PROCESSING DATES: 01/01/2025 - 01/02/2025
+
+                    SITE ID     LATITUDE    LONGITUDE     TIME ADJUSTMENT
+                   --------     --------    ---------     ---------------
+ LOCATION:           999999        49.55        25.60             5
+
+ DATA FILE:      OPEN      ternopil_upper.fsl
+ EXTRACT FILE:   OPEN      ternopil_upper.iqa
+ QAOUT FILE:     OPEN      ternopil_upper.oqa
+
+ UPPER AIR DATA ABOVE 5000 NOT EXTRACTED
+
+ UPPER AIR AUTOMATIC DATA CHECKS ARE: OFF
+
+
+
+ 3. SURFACE DATA
+
+ PROCESSING DATES: 01/01/2025 - 01/02/2025
+
+                    SITE ID     LATITUDE    LONGITUDE     TIME ADJUSTMENT    ELEVATION
+                   --------     --------    ---------     ---------------    ---------
+ LOCATION:           999999        49.55        25.60             0               0.00
+
+ DATA FILE:      OPEN      ternopil_surface.dat
+ EXTRACT FILE:   OPEN      ternopil_surf.iqa
+ QAOUT FILE:     OPEN      ternopil_surf.oqa
+
+
+
+ 4. ONSITE DATA
+
+ PROCESSING DATES: 01/01/2025 - 01/02/2025
+
+                    SITE ID     LATITUDE    LONGITUDE     TIME ADJUSTMENT    ELEVATION
+                   --------     --------    ---------     ---------------    ---------
+ LOCATION:           000001        49.55        25.60             0               0.00
+
+ DATA FILE:      OPEN      ternopil_onsite.dat
+ QAOUT FILE:     OPEN      ternopil_onsite.oqa
+
+ NUMBER OF OBSERVATIONS/HOUR:  1
+
+ THRESHOLD WIND SPEED (M/S):    0.30
+
+
+
+ 5. PROG DATA
+
+ NO PROCESSING REQUESTED
+
+
+
+
+ 6. METPREP DATA
+
+ NO PROCESSING REQUESTED
+
+
+
+ ****************************  MESSAGE SUMMARY **************************** 
+
+
+
+ ERROR MESSAGES        2 MESSAGES
+
+ E01:        1
+ E05:        1
+
+
+ WARNING MESSAGES        1 MESSAGES
+
+ W04:        1
+
+
+ INFORMATION MESSAGES        0 MESSAGES
+
+
+
+ QA MESSAGES        0 MESSAGES
+
+
+
+ AERMET FINISHED UN-SUCCESSFULLY
+
+ END PROCESSING DATE/TIME: NOVEMBER 11, 2025  10:31:20 AM
