@@ -1,0 +1,39 @@
+# Python bytecode
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Віртуальне середовище
+venv/
+ENV/
+env/
+.venv/
+
+# Файли конфігурації IDE
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# Логи
+*.log
+
+# Файли баз даних
+*.sqlite3
+
+# Файли з налаштуваннями ОС
+.DS_Store
+Thumbs.db
+
+# Пакети
+*.egg
+*.egg-info/
+dist/
+build/
+.eggs/
+
+# Під час використання Jupyter Notebook
+.ipynb_checkpoints/
+
+# Конфіденційні файли
+*.env
