@@ -15,12 +15,12 @@ namespace GeoProj.Services
             _baseDir = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Data", "aermod_exe");
         }
 
-        public async Task<Dictionary<string, List<DispersionDataPoint>>> RunSimulationAsync(MPoint sourcePoint, AermodSourceParameters parameters, IProgress<string> progress)
+        public async Task<Dictionary<string, List<DispersionDataPoint>>> RunSimulationAsync(List<AermodSource> sources, ReceptorSettings receptorSettings, IProgress<string> progress)
         {
             progress.Report("Крок 1/3: Генерація вхідних файлів (.inp)...");
             try
             {
-                AermodFileGenerator.GenerateInputFiles(sourcePoint, parameters, _baseDir);
+                AermodFileGenerator.GenerateInputFiles(sources, receptorSettings, _baseDir);
             }
             catch (Exception ex)
             {
@@ -41,7 +41,9 @@ namespace GeoProj.Services
             try
             {
                 string aermodOutPath = Path.Combine(_baseDir, "AERMOD", "aermod.out");
-                var allResults = AermodResultParser.ParseAermodOutFile(aermodOutPath);
+
+                var allResults = AermodResultParser.ParseAermodOutFile(aermodOutPath, receptorSettings.Mode);
+
                 progress.Report("Симуляцію завершено успішно!");
                 return allResults;
             }

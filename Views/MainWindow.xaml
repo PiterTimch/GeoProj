@@ -4,57 +4,230 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:mapsui="clr-namespace:Mapsui.UI.Wpf;assembly=Mapsui.UI.Wpf"
+        xmlns:models="clr-namespace:GeoProj.Models"
+        xmlns:helpers="clr-namespace:GeoProj.Helpers"
         mc:Ignorable="d"
         Title="CO₂ Visualizer" Width="1200" Height="800">
+
+    <Window.Resources>
+        <helpers:BooleanToVisibilityConverter x:Key="BoolToVisConverter" />
+        <helpers:NullToBooleanConverter x:Key="NullToBoolConverter" />
+
+        <Style TargetType="Border" x:Key="PopupBorderStyle">
+            <Setter Property="Background" Value="{DynamicResource PopupBackgroundBrush}" />
+            <Setter Property="BorderBrush" Value="{DynamicResource PanelBorderBrush}" />
+            <Setter Property="BorderThickness" Value="1" />
+            <Setter Property="CornerRadius" Value="5" />
+            <Setter Property="Padding" Value="15" />
+            <Setter Property="MinWidth" Value="250" />
+            <Setter Property="Effect">
+                <Setter.Value>
+                    <DropShadowEffect ShadowDepth="2" BlurRadius="8" Opacity="0.25" Color="Black" />
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style TargetType="TextBlock" x:Key="PopupTitleStyle">
+            <Setter Property="FontWeight" Value="Bold" />
+            <Setter Property="FontSize" Value="16" />
+            <Setter Property="Foreground" Value="{DynamicResource PanelHeaderTextBrush}" />
+            <Setter Property="Margin" Value="0,0,0,12" />
+        </Style>
+        <Style TargetType="TextBlock" x:Key="PopupContentStyle">
+            <Setter Property="Foreground" Value="{DynamicResource AppTextBrush}" />
+            <Setter Property="LineHeight" Value="20" />
+        </Style>
+    </Window.Resources>
+
     <Grid>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="Auto" />
+        </Grid.ColumnDefinitions>
+
         <mapsui:MapControl x:Name="MapControl" 
                              Background="Black"
                              MouseMove="MapControl_MouseMove"
-                             Info="OnMapClicked_AddSourcePoint"/>
+                             Info="OnMapClicked_Interact"
+                             MouseRightButtonUp="MapControl_MouseRightButtonUp"
+                             MouseLeave="MapControl_MouseLeave"/>
 
-        <Border HorizontalAlignment="Right"
-                VerticalAlignment="Top"
-                Margin="15" Background="#AAFFFFFF" CornerRadius="5" Padding="10">
-
-            <StackPanel Width="200">
-                <TextBlock Text="Параметри Джерела" FontSize="14" FontWeight="Bold" Margin="0,0,0,10"/>
-
-                <TextBlock Text="Швидкість викиду (г/с):"/>
-                <TextBox Text="{Binding EmissionRate, UpdateSourceTrigger=PropertyChanged}"/>
-
-                <TextBlock Text="Висота труби (м):" Margin="0,5,0,0"/>
-                <TextBox Text="{Binding StackHeight, UpdateSourceTrigger=PropertyChanged}"/>
-
-                <TextBlock Text="Температура викиду (K):" Margin="0,5,0,0"/>
-                <TextBox Text="{Binding StackTemp, UpdateSourceTrigger=PropertyChanged}"/>
-
-                <TextBlock Text="Швидкість газів (м/с):" Margin="0,5,0,0"/>
-                <TextBox Text="{Binding StackVelocity, UpdateSourceTrigger=PropertyChanged}"/>
-
-                <TextBlock Text="Діаметр труби (м):" Margin="0,5,0,0"/>
-                <TextBox Text="{Binding StackDiameter, UpdateSourceTrigger=PropertyChanged}"/>
-
-                <TextBlock Text="Показати шар даних:" Margin="0,10,0,0"/>
-                <ComboBox ItemsSource="{Binding LayerOptions}"
-                          SelectedItem="{Binding SelectedLayerOption}"/>
-
-                <Button Content="Запустити Розрахунок" 
-                        Margin="0,15,0,0"
-                        Command="{Binding RunSimulationCommand}"/>
-
-                <ProgressBar IsIndeterminate="{Binding IsSimulationRunning}" Height="10" Margin="0,5,0,0"/>
-                <TextBlock Text="{Binding StatusText}" TextWrapping="Wrap" Margin="0,5,0,0"/>
-            </StackPanel>
-        </Border>
-
-        <Border HorizontalAlignment="Right"
-                VerticalAlignment="Bottom"
-                Margin="15" Padding="6" Background="#AA000000" CornerRadius="5">
+        <Border HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="15" Padding="6" Background="#AA000000" CornerRadius="5">
             <TextBlock x:Name="CoordsText"
-                       Foreground="White"
-                       FontFamily="Consolas"
-                       FontSize="12"
-                       Text="{Binding CoordsText}"/>
+               Foreground="White"
+               FontFamily="Consolas"
+               FontSize="12"
+               Text="{Binding CoordsText}"/>
         </Border>
+
+        <Popup x:Name="InfoPopup"
+               Placement="MousePoint" 
+               StaysOpen="False"
+               AllowsTransparency="True"
+               IsOpen="{Binding IsPopupVisible}"
+               VerticalOffset="10" 
+               HorizontalOffset="10">
+
+            <Border Style="{StaticResource PopupBorderStyle}">
+                <StackPanel>
+                    <TextBlock Text="{Binding PopupTitle}" Style="{StaticResource PopupTitleStyle}" />
+                    <TextBlock Text="{Binding PopupContent}" Style="{StaticResource PopupContentStyle}" />
+                </StackPanel>
+            </Border>
+        </Popup>
+
+        <ScrollViewer Grid.Column="1" VerticalScrollBarVisibility="Auto">
+            <StackPanel Width="250" Margin="10" MinWidth="250">
+
+                <Border Background="{DynamicResource PanelBackgroundBrush}"
+                        BorderBrush="{DynamicResource PanelBorderBrush}"
+                        BorderThickness="1" CornerRadius="5" Padding="10">
+                    <StackPanel>
+                        <TextBlock Text="Джерела Забруднення" FontSize="14" FontWeight="Bold" Margin="0,0,0,10"
+                                   Foreground="{DynamicResource PanelHeaderTextBrush}"/>
+
+                        <TextBlock Text="(Alt+ЛКМ) щоб додати джерело" FontSize="11" Margin="0,0,0,5" Foreground="{DynamicResource PanelSubTextBrush}"/>
+
+                        <ListView x:Name="SourcesListView"
+                                  ItemsSource="{Binding Sources}"
+                                  SelectedItem="{Binding SelectedSource}"
+                                  DisplayMemberPath="DisplayName"
+                                  MaxHeight="150"
+                                  Background="{DynamicResource TextBoxBackgroundBrush}"
+                                  Foreground="{DynamicResource AppTextBrush}"
+                                  BorderBrush="{DynamicResource PanelBorderBrush}"/>
+
+                        <Button Content="Видалити Вибране" 
+                                Margin="0,5,0,10"
+                                Command="{Binding RemoveSourceCommand}"
+                                Background="{DynamicResource ButtonBackgroundBrush}"
+                                Foreground="{DynamicResource AppTextBrush}"/>
+
+                        <Grid DataContext="{Binding SelectedSource}"
+                              IsEnabled="{Binding Converter={StaticResource NullToBoolConverter}}">
+
+                            <StackPanel>
+                                <TextBlock Text="Інтенсивність (г/с):" Foreground="{DynamicResource AppTextBrush}"/>
+                                <TextBox Text="{Binding EmissionRate, UpdateSourceTrigger=PropertyChanged}"
+                                         Background="{DynamicResource TextBoxBackgroundBrush}"
+                                         Foreground="{DynamicResource AppTextBrush}"/>
+
+                                <TextBlock Text="Висота труби (м):" Margin="0,5,0,0"
+                                           Foreground="{DynamicResource AppTextBrush}"/>
+                                <TextBox Text="{Binding StackHeight, UpdateSourceTrigger=PropertyChanged}"
+                                         Background="{DynamicResource TextBoxBackgroundBrush}"
+                                         Foreground="{DynamicResource AppTextBrush}"/>
+
+                                <TextBlock Text="Температура викиду (K):" Margin="0,5,0,0"
+                                           Foreground="{DynamicResource AppTextBrush}"/>
+                                <TextBox Text="{Binding StackTemp, UpdateSourceTrigger=PropertyChanged}"
+                                         Background="{DynamicResource TextBoxBackgroundBrush}"
+                                         Foreground="{DynamicResource AppTextBrush}"/>
+
+                                <TextBlock Text="Швидкість газів (м/с):" Margin="0,5,0,0"
+                                           Foreground="{DynamicResource AppTextBrush}"/>
+                                <TextBox Text="{Binding StackVelocity, UpdateSourceTrigger=PropertyChanged}"
+                                         Background="{DynamicResource TextBoxBackgroundBrush}"
+                                         Foreground="{DynamicResource AppTextBrush}"/>
+
+                                <TextBlock Text="Діаметр труби (м):" Margin="0,5,0,0"
+                                           Foreground="{DynamicResource AppTextBrush}"/>
+                                <TextBox Text="{Binding StackDiameter, UpdateSourceTrigger=PropertyChanged}"
+                                         Background="{DynamicResource TextBoxBackgroundBrush}"
+                                         Foreground="{DynamicResource AppTextBrush}"/>
+                            </StackPanel>
+                        </Grid>
+                    </StackPanel>
+                </Border>
+
+                <Border Background="{DynamicResource PanelBackgroundBrush}"
+                        BorderBrush="{DynamicResource PanelBorderBrush}"
+                        BorderThickness="1" CornerRadius="5" Padding="10"
+                        Margin="0,10,0,0">
+                    <StackPanel>
+                        <TextBlock Text="Налаштування Сценарію" FontSize="14" FontWeight="Bold" Margin="0,0,0,10"
+                                   Foreground="{DynamicResource PanelHeaderTextBrush}"/>
+
+                        <TextBlock Text="Режим рецепторів:" Margin="0,0,0,0"
+                                   Foreground="{DynamicResource AppTextBrush}"/>
+                        <RadioButton Content="Автоматична сітка"
+                                     Margin="0,5,0,0"
+                                     Foreground="{DynamicResource AppTextBrush}"
+                                     IsChecked="{Binding SelectedReceptorMode, Converter={StaticResource EnumToBoolConverter}, ConverterParameter={x:Static models:ReceptorMode.Grid}}"
+                                     GroupName="ReceptorMode"/>
+                        <RadioButton Content="Власні точки"
+                                     Margin="0,5,0,0"
+                                     Foreground="{DynamicResource AppTextBrush}"
+                                     IsChecked="{Binding SelectedReceptorMode, Converter={StaticResource EnumToBoolConverter}, ConverterParameter={x:Static models:ReceptorMode.Discrete}}"
+                                     GroupName="ReceptorMode"/>
+                        <TextBlock Text="(Сітка базується на вибраному джерелі)" FontSize="11" Margin="20,0,0,5" Foreground="{DynamicResource PanelSubTextBrush}"/>
+
+                        <Button Content="Очистити точки" 
+                                Margin="0,8,0,0"
+                                Command="{Binding ClearCustomReceptorsCommand}"
+                                Background="{DynamicResource ButtonBackgroundBrush}"
+                                Foreground="{DynamicResource AppTextBrush}"/>
+                        <TextBlock Text="(Alt+ПКМ) щоб додати точку" FontSize="11" Margin="0,0,0,5" Foreground="{DynamicResource PanelSubTextBrush}"/>
+
+                        <TextBlock Text="Показати шар даних:" Margin="0,10,0,0"
+                                   Foreground="{DynamicResource AppTextBrush}"/>
+                        <ComboBox ItemsSource="{Binding LayerOptions}"
+                                  SelectedItem="{Binding SelectedLayerOption}"/>
+
+                        <Button Content="Запустити Розрахунок" 
+                                Margin="0,15,0,0"
+                                Command="{Binding RunSimulationCommand}"
+                                Background="{DynamicResource ButtonBackgroundBrush}"
+                                Foreground="{DynamicResource AppTextBrush}"/>
+
+                        <CheckBox Content="Темна тема"
+                                  IsChecked="{Binding IsDarkTheme, Mode=TwoWay}"
+                                  Margin="0,15,0,0"
+                                  Foreground="{DynamicResource AppTextBrush}"/>
+
+                        <ProgressBar IsIndeterminate="{Binding IsSimulationRunning}" Height="10" Margin="0,5,0,0"/>
+                        <TextBlock Text="{Binding StatusText}" TextWrapping="Wrap" Margin="0,5,0,0" Foreground="{DynamicResource PanelSubTextBrush}"/>
+
+                        <Border BorderBrush="{DynamicResource PanelBorderBrush}"
+                                BorderThickness="1" 
+                                Margin="0,15,0,0" 
+                                Padding="5"
+                                CornerRadius="3"
+                                Visibility="{Binding IsHeatmapVisible, Converter={StaticResource BoolToVisConverter}}">
+
+                            <StackPanel>
+
+                                <TextBlock Text="Легенда (концентрація, µg/m³)" FontWeight="Bold" FontSize="11" Margin="0,10,0,0"
+                                           Foreground="{DynamicResource PanelSubTextBrush}"/>
+
+                                <Rectangle Height="15" Margin="0,5,0,0">
+                                    <Rectangle.Fill>
+                                        <LinearGradientBrush StartPoint="0,0.5" EndPoint="1,0.5">
+                                            <GradientStop Color="#FF0000FF" Offset="0.0" />
+                                            <GradientStop Color="#FF00FF00" Offset="0.5" />
+                                            <GradientStop Color="#FFFF0000" Offset="1.0" />
+                                        </LinearGradientBrush>
+                                    </Rectangle.Fill>
+                                </Rectangle>
+
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="*" />
+                                    </Grid.ColumnDefinitions>
+
+                                    <TextBlock Text="{Binding MinLegendValue}" FontSize="10" HorizontalAlignment="Left" Grid.Column="0"
+                                               Foreground="{DynamicResource AppTextBrush}"/>
+
+                                    <TextBlock Text="{Binding MaxLegendValue}" FontSize="10" HorizontalAlignment="Right" Grid.Column="1"
+                                               Foreground="{DynamicResource AppTextBrush}"/>
+                                </Grid>
+                            </StackPanel>
+                        </Border>
+                    </StackPanel>
+                </Border>
+
+            </StackPanel>
+        </ScrollViewer>
     </Grid>
 </Window>

@@ -3,6 +3,7 @@ using System.Windows;
 using System.Windows.Input;
 using Mapsui.Extensions;
 using GeoProj.ViewModels;
+using Mapsui.UI.Wpf.Extensions;
 
 namespace GeoProj;
 
@@ -28,26 +29,71 @@ public partial class MainWindow : Window
         MapControl.Map = _viewModel.Map;
     }
 
-    private void OnMapClicked_AddSourcePoint(object sender, MapInfoEventArgs e)
+    private void OnMapClicked_Interact(object sender, MapInfoEventArgs e)
     {
         if (e.MapInfo?.WorldPosition == null || _viewModel == null) return;
 
-        var mapPoint = e.MapInfo.WorldPosition;
-        _viewModel.SetSourcePoint(mapPoint);
+        _viewModel.HideInfo();
+        var worldPos = e.MapInfo.WorldPosition;
+
+        if (Keyboard.IsKeyDown(Key.LeftAlt) || Keyboard.IsKeyDown(Key.RightAlt))
+        {
+            _viewModel.AddSource(worldPos);
+        }
+        else
+        {
+            _viewModel.SelectSourceByMapInfo(e.MapInfo);
+        }
     }
+
+    private void MapControl_MouseRightButtonUp(object sender, MouseButtonEventArgs e)
+    {
+        if (_viewModel == null || MapControl.Map == null) return;
+
+        var screenPositionWpf = e.GetPosition(MapControl);
+        var screenPositionMapsui = screenPositionWpf.ToMapsui();
+        var viewport = MapControl.Map.Navigator.Viewport;
+
+        if (Keyboard.IsKeyDown(Key.LeftAlt) || Keyboard.IsKeyDown(Key.RightAlt))
+        {
+            var worldPos = viewport.ScreenToWorld(screenPositionMapsui);
+            _viewModel.AddCustomReceptor(worldPos);
+            e.Handled = true;
+            return;
+        }
+
+        var mapInfo = MapControl.GetMapInfo(screenPositionMapsui, (int)viewport.Resolution);
+
+        if (mapInfo == null || mapInfo.MapInfoRecords == null || !mapInfo.MapInfoRecords.Any())
+        {
+            _viewModel.HideInfo();
+            return;
+        }
+
+        _viewModel.ShowFeatureInfo(mapInfo.MapInfoRecords.FirstOrDefault()?.Feature);
+    }
+
     private void MapControl_MouseMove(object sender, MouseEventArgs e)
     {
-        if (_viewModel == null) return;
+        if (_viewModel == null || MapControl.Map == null) return;
 
         try
         {
-            var screenPos = e.GetPosition(MapControl);
-            var worldPos = MapControl.Map.Navigator.Viewport.ScreenToWorld(new MPoint(screenPos.X, screenPos.Y));
+            var screenPosWpf = e.GetPosition(MapControl);
+            var screenPositionMapsui = screenPosWpf.ToMapsui();
+
+            var viewport = MapControl.Map.Navigator.Viewport;
+            var worldPos = viewport.ScreenToWorld(screenPositionMapsui);
             _viewModel.UpdateMouseCoordinates(worldPos);
         }
-        catch
+        catch (Exception)
         {
             _viewModel.UpdateMouseCoordinates(null);
         }
+    }
+
+    private void MapControl_MouseLeave(object sender, MouseEventArgs e)
+    {
+        _viewModel?.UpdateMouseCoordinates(null);
     }
 }
