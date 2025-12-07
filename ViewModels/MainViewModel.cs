@@ -35,6 +35,7 @@ namespace GeoProj.ViewModels
         private MPoint _selectedSourcePoint;
         private ILayer _resultHeatmapLayer;
         private Dictionary<string, List<DispersionDataPoint>> _simulationResults = new Dictionary<string, List<DispersionDataPoint>>();
+        private List<BuildingFootprint> _buildings;
 
         private double _emissionRate = 100.0;
         public double EmissionRate { get => _emissionRate; set => SetProperty(ref _emissionRate, value); }
@@ -137,7 +138,7 @@ namespace GeoProj.ViewModels
 
             try
             {
-                _simulationResults = await _aermodService.RunSimulationAsync(_selectedSourcePoint, sourceParams, progress);
+                _simulationResults = await _aermodService.RunSimulationAsync(_selectedSourcePoint, sourceParams, progress, _buildings);
 
                 OnLayerSelectionChanged();
             }
@@ -194,9 +195,9 @@ namespace GeoProj.ViewModels
                 var highList = new List<IFeature>();
                 var lowList = new List<IFeature>();
 
-                var buildings = BuildingLoader.LoadBuildings("Data/buildings.geojson");
+                _buildings = BuildingLoader.LoadBuildings("Data/buildings.geojson");
 
-                foreach (var b in buildings)
+                foreach (var b in _buildings)
                 {
                     Geometry geom = b.Polygon;
                     if (geom == null) continue;

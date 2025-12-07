@@ -15,12 +15,12 @@ namespace GeoProj.Services
             _baseDir = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Data", "aermod_exe");
         }
 
-        public async Task<Dictionary<string, List<DispersionDataPoint>>> RunSimulationAsync(MPoint sourcePoint, AermodSourceParameters parameters, IProgress<string> progress)
+        public async Task<Dictionary<string, List<DispersionDataPoint>>> RunSimulationAsync(MPoint sourcePoint, AermodSourceParameters parameters, IProgress<string> progress, List<BuildingFootprint> buildings)
         {
             progress.Report("Крок 1/3: Генерація вхідних файлів (.inp)...");
             try
             {
-                AermodFileGenerator.GenerateInputFiles(sourcePoint, parameters, _baseDir);
+                AermodFileGenerator.GenerateInputFiles(sourcePoint, parameters, _baseDir, buildings);
             }
             catch (Exception ex)
             {

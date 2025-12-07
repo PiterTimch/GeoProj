@@ -9,6 +9,7 @@ namespace GeoProj.Services
         Task<Dictionary<string, List<DispersionDataPoint>>> RunSimulationAsync(
             MPoint sourcePoint,
             AermodSourceParameters parameters,
-            IProgress<string> progress);
+            IProgress<string> progress,
+            List<BuildingFootprint> buildings);
     }
 }

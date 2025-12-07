@@ -8,7 +8,7 @@ namespace GeoProj.Helpers
 {
     public static class AermodFileGenerator
     {
-        public static void GenerateInputFiles(MPoint sourcePoint, AermodSourceParameters sourceParams, string baseDirectoryPath)
+        public static void GenerateInputFiles(MPoint sourcePoint, AermodSourceParameters sourceParams, string baseDirectoryPath, List<BuildingFootprint> buildings)
         {
             string aermetDir = Path.Combine(baseDirectoryPath, "AERMET");
             string aermodDir = Path.Combine(baseDirectoryPath, "AERMOD");
@@ -18,7 +18,7 @@ namespace GeoProj.Helpers
 
             GenerateAermetInputs(aermetDir);
 
-            GenerateAermodInput(aermodDir, sourcePoint, sourceParams);
+            GenerateAermodInput(aermodDir, sourcePoint, sourceParams, buildings);
         }
 
         private static void GenerateAermetInputs(string aermetDir)
@@ -158,15 +158,39 @@ namespace GeoProj.Helpers
             File.WriteAllText(Path.Combine(aermetDir, "aermet2.inp"), sb2.ToString());
         }
 
-        private static void GenerateAermodInput(string aermodDir, MPoint sourcePoint, AermodSourceParameters sourceParams)
+        private static void ExtractBuildingSize(
+            BuildingFootprint b,
+            out double centerX,
+            out double centerY,
+            out double length,
+            out double width)
+        {
+            var env = b.Polygon.EnvelopeInternal;
+
+            centerX = (env.MinX + env.MaxX) / 2.0;
+            centerY = (env.MinY + env.MaxY) / 2.0;
+
+            length = Math.Abs(env.MaxX - env.MinX);
+            width = Math.Abs(env.MaxY - env.MinY);
+
+            if (length < 1.0) length = 1.0;
+            if (width < 1.0) width = 1.0;
+        }
+
+
+        private static void GenerateAermodInput(
+            string aermodDir,
+            MPoint sourcePoint,
+            AermodSourceParameters sourceParams,
+            List<BuildingFootprint> buildings)
         {
             var sb = new StringBuilder();
             var ci = CultureInfo.InvariantCulture;
 
             // --- CO (Control) Pathway ---
             sb.AppendLine("CO STARTING");
-            sb.AppendLine("   TITLEONE CO2 Dispersion Model - Flat Terrain");
-            sb.AppendLine("   MODELOPT FLAT CONC");
+            sb.AppendLine("   TITLEONE CO2 Dispersion With Buildings");
+            sb.AppendLine("   MODELOPT FLAT CONC DOWNWASH");  // <-- важливо
             sb.AppendLine("   AVERTIME 1 3 24 PERIOD");
             sb.AppendLine("   POLLUTID CO2");
             sb.AppendLine("   RUNORNOT run");
@@ -177,38 +201,65 @@ namespace GeoProj.Helpers
             // --- SO (Source) Pathway ---
             sb.AppendLine("SO STARTING");
             double baseElevation = 0.0;
-            sb.AppendLine(string.Format(ci, "   LOCATION  STACK1  POINT  {0:F1}  {1:F1}  {2:F1}", sourcePoint.X, sourcePoint.Y, baseElevation));
-            sb.AppendLine(string.Format(ci, "   SRCPARAM  STACK1  {0:F1}  {1:F1}  {2:F1}  {3:F1}  {4:F1}",
-                sourceParams.EmissionRate, sourceParams.StackHeight, sourceParams.StackTemp, sourceParams.StackVelocity, sourceParams.StackDiameter));
+
+            sb.AppendLine(string.Format(ci,
+                "   LOCATION  STACK1  POINT  {0:F1}  {1:F1}  {2:F1}",
+                sourcePoint.X, sourcePoint.Y, baseElevation));
+
+            sb.AppendLine(string.Format(ci,
+                "   SRCPARAM  STACK1  {0:F1}  {1:F1}  {2:F1}  {3:F1}  {4:F1}",
+                sourceParams.EmissionRate,
+                sourceParams.StackHeight,
+                sourceParams.StackTemp,
+                sourceParams.StackVelocity,
+                sourceParams.StackDiameter));
+
             sb.AppendLine("   SRCGROUP  ALL");
+            sb.AppendLine("");
+
+            // --- BUILDINGS (AERMOD primitive format) ---
+            sb.AppendLine("   ** BUILDING DOWNWASH DATA **");
+
+            foreach (var b in buildings)
+            {
+                ExtractBuildingSize(b, out double cx, out double cy, out double len, out double wid);
+
+                sb.AppendLine(string.Format(ci,
+                    "   BUILDHGT STACK1 {0:F1}", b.HeightMeters));
+
+                sb.AppendLine(string.Format(ci,
+                    "   BUILDWID {0} {1:F1}", b.Id, wid));
+
+                sb.AppendLine(string.Format(ci,
+                    "   BUILDLEN {0} {1:F1}", b.Id, len));
+
+                // AERMOD needs building location also
+                sb.AppendLine(string.Format(ci,
+                    "   BUILDLOC {0} {1:F1} {2:F1}", b.Id, cx, cy));
+            }
+
             sb.AppendLine("SO FINISHED");
             sb.AppendLine("");
 
-            // --- RE (Receptor) Pathway ---
+            // --- RE (Receptors) ---
             sb.AppendLine("RE STARTING");
             sb.AppendLine("   GRIDPOLR POLR1 STA");
             sb.AppendLine("   GRIDPOLR POLR1 ORIG STACK1");
-            sb.AppendLine("   GRIDPOLR POLR1 DIST 100. 300. 500. 750. 1000. 1500. 2000. 3000. 5000. 10000.");
-            sb.AppendLine("   GRIDPOLR POLR1 GDIR 16 1.0 22.5"); // 16 - кількість напрямків (кожні 22.5 градуси)
-            sb.AppendLine(string.Format(ci, "   GRIDPOLR POLR1 ELEV 1 {0:F1}", baseElevation));
-            sb.AppendLine("   GRIDPOLR POLR1 FLAG 1 0.0");
+            sb.AppendLine("   GRIDPOLR POLR1 DIST 100. 300. 500. 750. 1000. 2000. 3000. 5000.");
+            sb.AppendLine("   GRIDPOLR POLR1 GDIR 16 1.0 22.5");
+            sb.AppendLine("   GRIDPOLR POLR1 ELEV 1 0.0");
             sb.AppendLine("   GRIDPOLR POLR1 END");
-
             sb.AppendLine("RE FINISHED");
             sb.AppendLine("");
 
-            // --- ME (Meteorology) Pathway ---
+            // --- ME (Met) ---
             sb.AppendLine("ME STARTING");
             sb.AppendLine(@"   SURFFILE  ..\aermet\aermet.sfc   free");
             sb.AppendLine(@"   PROFFILE  ..\aermet\aermet.pfl   free");
-            sb.AppendLine("   SURFDATA  14737  1992  Allentown");
-            sb.AppendLine("   SITEDATA  000001  1992  Martin_Crk");
-            sb.AppendLine("   UAIRDATA  14735  1992  Abany");
-            sb.AppendLine("   PROFBASE  0.0");
             sb.AppendLine("ME FINISHED");
             sb.AppendLine("");
 
-            // --- OU (Output) Pathway ---
+            // --- OU (Output) ---
             sb.AppendLine("OU STARTING");
             sb.AppendLine("   RECTABLE  allave first-second");
             sb.AppendLine("   MAXTABLE  allave    400");
@@ -217,5 +268,6 @@ namespace GeoProj.Helpers
 
             File.WriteAllText(Path.Combine(aermodDir, "aermod.inp"), sb.ToString());
         }
+
     }
 }
