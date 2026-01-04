@@ -30,7 +30,15 @@ public partial class MainWindow : Window
 
     private void OnMapClicked_AddSourcePoint(object sender, MapInfoEventArgs e)
     {
-        if (e.MapInfo?.WorldPosition == null || _viewModel == null) return;
+        if (_viewModel == null || e.MapInfo == null) return;
+
+        if (e.MapInfo.Feature != null && e.MapInfo.Feature.RenderedGeometry != null)
+        {
+            _viewModel.ShowBuildingImpact(e.MapInfo.Feature);
+            return;
+        }
+
+        if (e.MapInfo.WorldPosition == null) return;
 
         var mapPoint = e.MapInfo.WorldPosition;
         _viewModel.SetSourcePoint(mapPoint);

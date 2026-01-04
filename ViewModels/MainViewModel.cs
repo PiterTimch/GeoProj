@@ -34,7 +34,9 @@ namespace GeoProj.ViewModels
         private readonly List<IFeature> _sourcePointFeatures = new List<IFeature>();
         private MPoint _selectedSourcePoint;
         private ILayer _resultHeatmapLayer;
-        private Dictionary<string, List<DispersionDataPoint>> _simulationResults = new Dictionary<string, List<DispersionDataPoint>>();
+        private readonly Dictionary<string, List<DispersionDataPoint>> _simulationResults = new Dictionary<string, List<DispersionDataPoint>>();
+        private List<IFeature> _currentHeatmapFeatures = new List<IFeature>();
+        private double _currentMaxConcentration = 0.0;
         private List<BuildingFootprint> _buildings;
 
         private double _emissionRate = 100.0;
@@ -138,9 +140,17 @@ namespace GeoProj.ViewModels
 
             try
             {
-                _simulationResults = await _aermodService.RunSimulationAsync(_selectedSourcePoint, sourceParams, progress, _buildings);
+                var results = await _aermodService.RunSimulationAsync(_selectedSourcePoint, sourceParams, progress, _buildings);
+
+                _simulationResults.Clear();
+                foreach (var kvp in results)
+                {
+                    _simulationResults[kvp.Key] = kvp.Value;
+                }
 
                 OnLayerSelectionChanged();
+
+                ShowSimulationSummary();
             }
             catch (Exception ex)
             {
@@ -231,8 +241,8 @@ namespace GeoProj.ViewModels
             var highProvider = new MemoryProvider(highFeatures);
             var lowProvider = new MemoryProvider(lowFeatures);
 
-            var highLayer = new Layer("Buildings_High") { DataSource = highProvider, Style = highStyle };
-            var lowLayer = new Layer("Buildings_Low") { DataSource = lowProvider, Style = lowStyle };
+            var highLayer = new Layer("Buildings_High") { DataSource = highProvider, Style = highStyle, IsMapInfoLayer = true };
+            var lowLayer = new Layer("Buildings_Low") { DataSource = lowProvider, Style = lowStyle, IsMapInfoLayer = true };
 
             Map?.Layers.Add(lowLayer);
             Map?.Layers.Add(highLayer);
@@ -274,6 +284,7 @@ namespace GeoProj.ViewModels
             foreach (var kv in b.Tags)
                 feature[kv.Key] = kv.Value;
             feature["height_m"] = b.HeightMeters;
+            feature["building_id"] = b.Id;
             if (b.HeightMeters > 1.0) highList.Add(feature);
             else lowList.Add(feature);
         }
@@ -313,6 +324,9 @@ namespace GeoProj.ViewModels
 
         private void UpdateHeatmapLayer(List<DispersionDataPoint> dataPoints)
         {
+            _currentHeatmapFeatures.Clear();
+            _currentMaxConcentration = 0.0;
+
             if (_resultHeatmapLayer != null)
             {
                 Map.Layers.Remove(_resultHeatmapLayer);
@@ -404,6 +418,9 @@ namespace GeoProj.ViewModels
 
                 _resultHeatmapLayer = vectorLayer;
                 Map.Layers.Add(_resultHeatmapLayer);
+
+                _currentHeatmapFeatures = features;
+                _currentMaxConcentration = maxIntensity;
                 Debug.WriteLine($"Додано Векторний Шар '{_resultHeatmapLayer.Name}' на карту.");
                 Map.RefreshGraphics();
             }
@@ -461,6 +478,145 @@ namespace GeoProj.ViewModels
         private void ShowError(string message)
         {
             MessageBox.Show(message, "Помилка", MessageBoxButton.OK, MessageBoxImage.Error);
+        }
+
+        private void ShowSimulationSummary()
+        {
+            if (_simulationResults == null || _simulationResults.Count == 0)
+                return;
+
+            double GetMax(string key)
+            {
+                return _simulationResults.ContainsKey(key) && _simulationResults[key].Any()
+                    ? _simulationResults[key].Max(p => p.Concentration)
+                    : 0.0;
+            }
+
+            var oneHrMax = GetMax("1-HR");
+            var threeHrMax = GetMax("3-HR");
+            var dayMax = GetMax("24-HR");
+            var periodMax = GetMax("PERIOD");
+
+            var msg = $"Симуляцію завершено.\n\n" +
+                      $"1-годинний максимум: {oneHrMax:F3}\n" +
+                      $"3-годинний максимум: {threeHrMax:F3}\n" +
+                      $"24-годинний максимум: {dayMax:F3}\n" +
+                      $"Середнє за період (макс. по сітці): {periodMax:F3}\n\n" +
+                      $"Тепер ви можете натиснути на будинок на карті,\n" +
+                      $"щоб переглянути вплив на конкретну будівлю.";
+
+            MessageBox.Show(msg, "Результати симуляції", MessageBoxButton.OK, MessageBoxImage.Information);
+        }
+
+        public void ShowBuildingImpact(IFeature buildingFeature)
+        {
+            // У Mapsui.Nts.GeometryFeature є Geometry (NTS), її й використовуємо
+            var ntsBuildingFeature = buildingFeature as GeometryFeature;
+            if (ntsBuildingFeature == null || ntsBuildingFeature.Geometry == null)
+                return;
+
+            if (_currentHeatmapFeatures == null || !_currentHeatmapFeatures.Any() || _currentMaxConcentration <= 0)
+            {
+                MessageBox.Show("Немає активних результатів симуляції. Спочатку запустіть розрахунок.", "Немає даних", MessageBoxButton.OK, MessageBoxImage.Information);
+                return;
+            }
+
+            var centroid = ntsBuildingFeature.Geometry.Centroid;
+            if (centroid == null)
+                return;
+
+            double cx = centroid.Coordinate.X;
+            double cy = centroid.Coordinate.Y;
+
+            double bestDistSq = double.MaxValue;
+            double bestConc = 0.0;
+
+            foreach (var f in _currentHeatmapFeatures)
+            {
+                var ntsFeature = f as GeometryFeature;
+                if (ntsFeature?.Geometry is NetTopologySuite.Geometries.Point pt)
+                {
+                    double dx = pt.X - cx;
+                    double dy = pt.Y - cy;
+                    double distSq = dx * dx + dy * dy;
+                    if (distSq < bestDistSq)
+                    {
+                        bestDistSq = distSq;
+                        try
+                        {
+                            if (f.Fields != null && f.Fields.Contains("concentration"))
+                            {
+                                var val = f["concentration"];
+                                if (val != null)
+                                    bestConc = Convert.ToDouble(val);
+                            }
+                        }
+                        catch
+                        {
+                            // ignore parse errors
+                        }
+                    }
+                }
+            }
+
+            double relative = _currentMaxConcentration > 0 ? bestConc / _currentMaxConcentration : 0.0;
+            string safety;
+
+            if (relative <= 0.2)
+                safety = "Безпечно (низький рівень впливу)";
+            else if (relative <= 0.6)
+                safety = "Помірний вплив (загалом прийнятно)";
+            else
+                safety = "Небезпечно (високий рівень впливу)";
+
+            string buildingName = "";
+            try
+            {
+                if (buildingFeature.Fields != null)
+                {
+                    if (buildingFeature.Fields.Contains("name"))
+                    {
+                        buildingName = buildingFeature["name"]?.ToString() ?? "";
+                    }
+                    else if (buildingFeature.Fields.Contains("addr:housenumber"))
+                    {
+                        buildingName = $"Будинок {buildingFeature["addr:housenumber"]}";
+                    }
+                }
+            }
+            catch
+            {
+                // ignore
+            }
+
+            if (string.IsNullOrWhiteSpace(buildingName))
+                buildingName = "Невідомий будинок";
+
+            double height = 0.0;
+            try
+            {
+                if (buildingFeature.Fields != null && buildingFeature.Fields.Contains("height_m"))
+                {
+                    var val = buildingFeature["height_m"];
+                    if (val != null)
+                        height = Convert.ToDouble(val);
+                }
+            }
+            catch
+            {
+                // ignore
+            }
+
+            var periodLabel = SelectedLayerOption;
+
+            var text = $"{buildingName}\n" +
+                       $"Висота: {height:F1} м\n" +
+                       $"Обраний період: {periodLabel}\n\n" +
+                       $"Оцінка концентрації біля будівлі: {bestConc:F3}\n" +
+                       $"Відносно максимуму по карті: {(relative * 100.0):F1}%\n\n" +
+                       $"Висновок: {safety}";
+
+            MessageBox.Show(text, "Вплив на будівлю", MessageBoxButton.OK, MessageBoxImage.Information);
         }
     }
 }
