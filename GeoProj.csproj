@@ -9,6 +9,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.0" />
     <PackageReference Include="Mapsui" Version="4.1.9" />
     <PackageReference Include="Mapsui.Nts" Version="4.1.9" />
     <PackageReference Include="Mapsui.Tiling" Version="4.1.9" />

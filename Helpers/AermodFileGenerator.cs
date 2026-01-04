@@ -8,7 +8,7 @@ namespace GeoProj.Helpers
 {
     public static class AermodFileGenerator
     {
-        public static void GenerateInputFiles(MPoint sourcePoint, AermodSourceParameters sourceParams, string baseDirectoryPath, List<BuildingFootprint> buildings)
+        public static void GenerateInputFiles(List<AermodSource> sources, ReceptorSettings receptorSettings, string baseDirectoryPath, List<BuildingFootprint> buildings = null)
         {
             string aermetDir = Path.Combine(baseDirectoryPath, "AERMET");
             string aermodDir = Path.Combine(baseDirectoryPath, "AERMOD");
@@ -17,8 +17,7 @@ namespace GeoProj.Helpers
             Directory.CreateDirectory(aermodDir);
 
             GenerateAermetInputs(aermetDir);
-
-            GenerateAermodInput(aermodDir, sourcePoint, sourceParams, buildings);
+            GenerateAermodInput(aermodDir, sources, receptorSettings, buildings);
         }
 
         private static void GenerateAermetInputs(string aermetDir)
@@ -177,12 +176,7 @@ namespace GeoProj.Helpers
             if (width < 1.0) width = 1.0;
         }
 
-
-        private static void GenerateAermodInput(
-            string aermodDir,
-            MPoint sourcePoint,
-            AermodSourceParameters sourceParams,
-            List<BuildingFootprint> buildings)
+        private static void GenerateAermodInput(string aermodDir, List<AermodSource> sources, ReceptorSettings receptorSettings, List<BuildingFootprint> buildings = null)
         {
             var sb = new StringBuilder();
             var ci = CultureInfo.InvariantCulture;
@@ -202,40 +196,42 @@ namespace GeoProj.Helpers
             sb.AppendLine("SO STARTING");
             double baseElevation = 0.0;
 
-            sb.AppendLine(string.Format(ci,
-                "   LOCATION  STACK1  POINT  {0:F1}  {1:F1}  {2:F1}",
-                sourcePoint.X, sourcePoint.Y, baseElevation));
-
-            sb.AppendLine(string.Format(ci,
-                "   SRCPARAM  STACK1  {0:F1}  {1:F1}  {2:F1}  {3:F1}  {4:F1}",
-                sourceParams.EmissionRate,
-                sourceParams.StackHeight,
-                sourceParams.StackTemp,
-                sourceParams.StackVelocity,
-                sourceParams.StackDiameter));
+            foreach (var source in sources)
+            {
+                sb.AppendLine(string.Format(ci, "   LOCATION  {0}  POINT  {1:F1}  {2:F1}  {3:F1}", source.SourceId, source.Point.X, source.Point.Y, baseElevation));
+                sb.AppendLine(string.Format(ci, "   SRCPARAM  {0}  {1:F1}  {2:F1}  {3:F1}  {4:F1}  {5:F1}",
+                    source.SourceId, source.EmissionRate, source.StackHeight, source.StackTemp, source.StackVelocity, source.StackDiameter));
+            }
 
             sb.AppendLine("   SRCGROUP  ALL");
             sb.AppendLine("");
 
             // --- BUILDINGS (AERMOD primitive format) ---
-            sb.AppendLine("   ** BUILDING DOWNWASH DATA **");
-
-            foreach (var b in buildings)
+            if (buildings != null && buildings.Count > 0)
             {
-                ExtractBuildingSize(b, out double cx, out double cy, out double len, out double wid);
+                sb.AppendLine("   ** BUILDING DOWNWASH DATA **");
 
-                sb.AppendLine(string.Format(ci,
-                    "   BUILDHGT STACK1 {0:F1}", b.HeightMeters));
+                foreach (var b in buildings)
+                {
+                    ExtractBuildingSize(b, out double cx, out double cy, out double len, out double wid);
 
-                sb.AppendLine(string.Format(ci,
-                    "   BUILDWID {0} {1:F1}", b.Id, wid));
+                    // Associate buildings with all sources (for downwash effects)
+                    foreach (var source in sources)
+                    {
+                        sb.AppendLine(string.Format(ci,
+                            "   BUILDHGT {0} {1:F1}", source.SourceId, b.HeightMeters));
+                    }
 
-                sb.AppendLine(string.Format(ci,
-                    "   BUILDLEN {0} {1:F1}", b.Id, len));
+                    sb.AppendLine(string.Format(ci,
+                        "   BUILDWID {0} {1:F1}", b.Id, wid));
 
-                // AERMOD needs building location also
-                sb.AppendLine(string.Format(ci,
-                    "   BUILDLOC {0} {1:F1} {2:F1}", b.Id, cx, cy));
+                    sb.AppendLine(string.Format(ci,
+                        "   BUILDLEN {0} {1:F1}", b.Id, len));
+
+                    // AERMOD needs building location also
+                    sb.AppendLine(string.Format(ci,
+                        "   BUILDLOC {0} {1:F1} {2:F1}", b.Id, cx, cy));
+                }
             }
 
             sb.AppendLine("SO FINISHED");
@@ -243,19 +239,40 @@ namespace GeoProj.Helpers
 
             // --- RE (Receptors) ---
             sb.AppendLine("RE STARTING");
-            sb.AppendLine("   GRIDPOLR POLR1 STA");
-            sb.AppendLine("   GRIDPOLR POLR1 ORIG STACK1");
-            sb.AppendLine("   GRIDPOLR POLR1 DIST 100. 300. 500. 750. 1000. 2000. 3000. 5000.");
-            sb.AppendLine("   GRIDPOLR POLR1 GDIR 16 1.0 22.5");
-            sb.AppendLine("   GRIDPOLR POLR1 ELEV 1 0.0");
-            sb.AppendLine("   GRIDPOLR POLR1 END");
+
+            if (receptorSettings.Mode == ReceptorMode.Grid)
+            {
+                if (receptorSettings.GridOrigin == null)
+                {
+                    throw new Exception("GridOrigin (SelectedSource) must be set in Grid mode.");
+                }
+                sb.AppendLine("   GRIDPOLR POLR1 STA");
+                sb.AppendLine(string.Format(ci, "   GRIDPOLR POLR1 ORIG {0:F1} {1:F1}", receptorSettings.GridOrigin.X, receptorSettings.GridOrigin.Y));
+                sb.AppendLine("   GRIDPOLR POLR1 DIST 100. 300. 500. 750. 1000. 1500. 2000. 3000. 5000.");
+                sb.AppendLine("   GRIDPOLR POLR1 GDIR 16 1.0 22.5");
+                sb.AppendLine(string.Format(ci, "   GRIDPOLR POLR1 ELEV 1 {0:F1}", baseElevation));
+                sb.AppendLine("   GRIDPOLR POLR1 FLAG 1 0.0");
+                sb.AppendLine("   GRIDPOLR POLR1 END");
+            }
+            else
+            {
+                foreach (var point in receptorSettings.Points)
+                {
+                    sb.AppendLine(string.Format(ci, "   DISCCART {0:F1} {1:F1}", point.X, point.Y));
+                }
+            }
+
             sb.AppendLine("RE FINISHED");
             sb.AppendLine("");
 
             // --- ME (Met) ---
             sb.AppendLine("ME STARTING");
-            sb.AppendLine(@"   SURFFILE  ..\aermet\aermet.sfc   free");
-            sb.AppendLine(@"   PROFFILE  ..\aermet\aermet.pfl   free");
+            sb.AppendLine(@"   SURFFILE  ..\aermet\aermet.sfc    free");
+            sb.AppendLine(@"   PROFFILE  ..\aermet\aermet.pfl    free");
+            sb.AppendLine("   SURFDATA  14737  1992  Allentown");
+            sb.AppendLine("   SITEDATA  000001  1992  Martin_Crk");
+            sb.AppendLine("   UAIRDATA  14735  1992  Abany");
+            sb.AppendLine("   PROFBASE  0.0");
             sb.AppendLine("ME FINISHED");
             sb.AppendLine("");
 

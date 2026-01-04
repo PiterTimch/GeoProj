@@ -39,7 +39,7 @@ public static class BuildingLoader
             {
                 if (double.TryParse(attrs["building:levels"].ToString(), out double levels))
                 {
-                    height = levels * 3.0;
+                    height = levels * 4.0;
                 }
             }
             else
