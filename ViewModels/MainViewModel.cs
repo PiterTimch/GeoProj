@@ -72,7 +72,7 @@ namespace GeoProj.ViewModels
         private MPoint _selectedSourcePoint;
 
         private ILayer _resultHeatmapLayer;
-        private readonly Dictionary<string, List<DispersionDataPoint>> _simulationResults = new Dictionary<string, List<DispersionDataPoint>>();
+        private Dictionary<string, List<DispersionDataPoint>> _simulationResults = new Dictionary<string, List<DispersionDataPoint>>();
         private List<IFeature> _currentHeatmapFeatures = new List<IFeature>();
         private double _currentMaxConcentration = 0.0;
         private List<BuildingFootprint> _buildings;
