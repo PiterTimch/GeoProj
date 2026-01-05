@@ -283,7 +283,18 @@ namespace GeoProj.Helpers
             sb.AppendLine("   SUMMFILE  aermod.sum");
             sb.AppendLine("OU FINISHED");
 
-            File.WriteAllText(Path.Combine(aermodDir, "aermod.inp"), sb.ToString());
+            string outputPath = Path.Combine(aermodDir, "aermod.inp");
+            
+            // ВАЖЛИВО: Видаляємо старий файл перед записом нового
+            // Інакше можуть залишитися старі дані
+            if (File.Exists(outputPath))
+            {
+                File.Delete(outputPath);
+                System.Diagnostics.Debug.WriteLine($"[AermodFileGenerator] Старий файл видалено: {outputPath}");
+            }
+            
+            File.WriteAllText(outputPath, sb.ToString());
+            System.Diagnostics.Debug.WriteLine($"[AermodFileGenerator] ✅ Файл записано: {outputPath}, розмір: {sb.Length} символів");
         }
 
     }

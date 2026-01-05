@@ -257,12 +257,7 @@ namespace GeoProj.ViewModels
             }
             else if (feature.Fields.Contains("receptor_id"))
             {
-                if (feature is GeometryFeature recFeature && recFeature.Geometry is Point recPoint)
-                {
-                    PopupTitle = "Власний Рецептор";
-                    PopupContent = $"ID: {feature["receptor_id"]}\nX: {recPoint.X:F0}\nY: {recPoint.Y:F0}";
-                    IsPopupVisible = true;
-                }
+                ShowReceptorInfo(feature);
             }
             else if (feature.Fields.Contains("source_id"))
             {
@@ -359,6 +354,27 @@ namespace GeoProj.ViewModels
             try
             {
                 _simulationResults = await _aermodService.RunSimulationAsync(Sources.ToList(), receptorSettings, progress, _buildings);
+                
+                // Автоматично вибираємо перший доступний період для відображення
+                if (_simulationResults != null && _simulationResults.Count > 0)
+                {
+                    // Знаходимо перший період з даними
+                    string firstAvailablePeriod = null;
+                    if (_simulationResults.ContainsKey("PERIOD") && _simulationResults["PERIOD"].Any())
+                        firstAvailablePeriod = "Середнє за період";
+                    else if (_simulationResults.ContainsKey("24-HR") && _simulationResults["24-HR"].Any())
+                        firstAvailablePeriod = "Середнє за 24 години";
+                    else if (_simulationResults.ContainsKey("3-HR") && _simulationResults["3-HR"].Any())
+                        firstAvailablePeriod = "Середнє за 3 години";
+                    else if (_simulationResults.ContainsKey("1-HR") && _simulationResults["1-HR"].Any())
+                        firstAvailablePeriod = "Середнє за 1 годину";
+                    
+                    if (firstAvailablePeriod != null && LayerOptions.Contains(firstAvailablePeriod))
+                    {
+                        SelectedLayerOption = firstAvailablePeriod;
+                    }
+                }
+                
                 OnLayerSelectionChanged();
 
                 ShowSimulationSummary();
@@ -859,15 +875,49 @@ namespace GeoProj.ViewModels
 
         public void ShowBuildingImpact(IFeature buildingFeature)
         {
-            // У Mapsui.Nts.GeometryFeature є Geometry (NTS), її й використовуємо
             var ntsBuildingFeature = buildingFeature as GeometryFeature;
             if (ntsBuildingFeature == null || ntsBuildingFeature.Geometry == null)
                 return;
 
+            if (_simulationResults == null || _simulationResults.Count == 0)
+            {
+                MessageBox.Show("Немає результатів симуляції. Спочатку запустіть розрахунок.", "Немає даних", MessageBoxButton.OK, MessageBoxImage.Information);
+                return;
+            }
+            
+            List<DispersionDataPoint> dataPointsToUse = null;
             if (_currentHeatmapFeatures == null || !_currentHeatmapFeatures.Any() || _currentMaxConcentration <= 0)
             {
-                MessageBox.Show("Немає активних результатів симуляції. Спочатку запустіть розрахунок.", "Немає даних", MessageBoxButton.OK, MessageBoxImage.Information);
-                return;
+                string selectedKey = "";
+                switch (SelectedLayerOption)
+                {
+                    case "Середнє за 1 годину": selectedKey = "1-HR"; break;
+                    case "Середнє за 3 години": selectedKey = "3-HR"; break;
+                    case "Середнє за 24 години": selectedKey = "24-HR"; break;
+                    case "Середнє за період": selectedKey = "PERIOD"; break;
+                }
+
+                if (!string.IsNullOrEmpty(selectedKey) && _simulationResults.ContainsKey(selectedKey))
+                {
+                    dataPointsToUse = _simulationResults[selectedKey];
+                }
+                else
+                {
+                    if (_simulationResults.ContainsKey("PERIOD") && _simulationResults["PERIOD"].Any())
+                        dataPointsToUse = _simulationResults["PERIOD"];
+                    else if (_simulationResults.ContainsKey("24-HR") && _simulationResults["24-HR"].Any())
+                        dataPointsToUse = _simulationResults["24-HR"];
+                    else if (_simulationResults.ContainsKey("3-HR") && _simulationResults["3-HR"].Any())
+                        dataPointsToUse = _simulationResults["3-HR"];
+                    else if (_simulationResults.ContainsKey("1-HR") && _simulationResults["1-HR"].Any())
+                        dataPointsToUse = _simulationResults["1-HR"];
+                }
+
+                if (dataPointsToUse == null || !dataPointsToUse.Any())
+                {
+                    MessageBox.Show("Немає даних для відображення. Виберіть період у списку 'Показати шар даних'.", "Немає даних", MessageBoxButton.OK, MessageBoxImage.Information);
+                    return;
+                }
             }
 
             var centroid = ntsBuildingFeature.Geometry.Centroid;
@@ -879,36 +929,52 @@ namespace GeoProj.ViewModels
 
             double bestDistSq = double.MaxValue;
             double bestConc = 0.0;
+            double maxConc = _currentMaxConcentration;
 
-            foreach (var f in _currentHeatmapFeatures)
+            if (dataPointsToUse != null)
             {
-                var ntsFeature = f as GeometryFeature;
-                if (ntsFeature?.Geometry is NetTopologySuite.Geometries.Point pt)
+                foreach (var dp in dataPointsToUse)
                 {
-                    double dx = pt.X - cx;
-                    double dy = pt.Y - cy;
+                    double dx = dp.Point.X - cx;
+                    double dy = dp.Point.Y - cy;
                     double distSq = dx * dx + dy * dy;
                     if (distSq < bestDistSq)
                     {
                         bestDistSq = distSq;
-                        try
+                        bestConc = dp.Concentration;
+                    }
+                }
+                maxConc = dataPointsToUse.Max(p => p.Concentration);
+            }
+            else
+            {
+                foreach (var f in _currentHeatmapFeatures)
+                {
+                    var ntsFeature = f as GeometryFeature;
+                    if (ntsFeature?.Geometry is NetTopologySuite.Geometries.Point pt)
+                    {
+                        double dx = pt.X - cx;
+                        double dy = pt.Y - cy;
+                        double distSq = dx * dx + dy * dy;
+                        if (distSq < bestDistSq)
                         {
-                            if (f.Fields != null && f.Fields.Contains("concentration"))
+                            bestDistSq = distSq;
+                            try
                             {
-                                var val = f["concentration"];
-                                if (val != null)
-                                    bestConc = Convert.ToDouble(val);
+                                if (f.Fields != null && f.Fields.Contains("concentration"))
+                                {
+                                    var val = f["concentration"];
+                                    if (val != null)
+                                        bestConc = Convert.ToDouble(val);
+                                }
                             }
-                        }
-                        catch
-                        {
-                            // ignore parse errors
+                            catch {}
                         }
                     }
                 }
             }
 
-            double relative = _currentMaxConcentration > 0 ? bestConc / _currentMaxConcentration : 0.0;
+            double relative = maxConc > 0 ? bestConc / maxConc : 0.0;
             string safety;
 
             if (relative <= 0.2)
@@ -933,10 +999,7 @@ namespace GeoProj.ViewModels
                     }
                 }
             }
-            catch
-            {
-                // ignore
-            }
+            catch {}
 
             if (string.IsNullOrWhiteSpace(buildingName))
                 buildingName = "Невідомий будинок";
@@ -951,10 +1014,7 @@ namespace GeoProj.ViewModels
                         height = Convert.ToDouble(val);
                 }
             }
-            catch
-            {
-                // ignore
-            }
+            catch {}
 
             var periodLabel = SelectedLayerOption;
 
@@ -966,6 +1026,134 @@ namespace GeoProj.ViewModels
                        $"Висновок: {safety}";
 
             MessageBox.Show(text, "Вплив на будівлю", MessageBoxButton.OK, MessageBoxImage.Information);
+        }
+
+        public void ShowReceptorInfo(IFeature feature)
+        {
+            if (feature == null)
+            {
+                HideInfo();
+                return;
+            }
+
+            var ntsReceptorFeature = feature as GeometryFeature;
+            if (ntsReceptorFeature == null || ntsReceptorFeature.Geometry == null)
+            {
+                HideInfo();
+                return;
+            }
+
+            var receptorPoint = ntsReceptorFeature.Geometry as Point;
+            if (receptorPoint == null)
+            {
+                HideInfo();
+                return;
+            }
+
+            double rx = receptorPoint.X;
+            double ry = receptorPoint.Y;
+
+            // Перевірка, чи є дані симуляції
+            if (_simulationResults == null || _simulationResults.Count == 0)
+            {
+                PopupTitle = "Власний Рецептор";
+                PopupContent = $"ID: {feature["receptor_id"]}\nX: {rx:F0}\nY: {ry:F0}\n\n⚠️ Немає результатів симуляції.";
+                IsPopupVisible = true;
+                return;
+            }
+
+            // Знаходимо дані для поточного вибраного періоду або першого доступного
+            List<DispersionDataPoint> dataPointsToUse = null;
+            string periodLabel = SelectedLayerOption;
+
+            string selectedKey = "";
+            switch (SelectedLayerOption)
+            {
+                case "Середнє за 1 годину": selectedKey = "1-HR"; break;
+                case "Середнє за 3 години": selectedKey = "3-HR"; break;
+                case "Середнє за 24 години": selectedKey = "24-HR"; break;
+                case "Середнє за період": selectedKey = "PERIOD"; break;
+            }
+
+            if (!string.IsNullOrEmpty(selectedKey) && _simulationResults.ContainsKey(selectedKey))
+            {
+                dataPointsToUse = _simulationResults[selectedKey];
+            }
+            else
+            {
+                // Якщо період не вибрано, беремо перший доступний
+                if (_simulationResults.ContainsKey("PERIOD") && _simulationResults["PERIOD"].Any())
+                {
+                    dataPointsToUse = _simulationResults["PERIOD"];
+                    periodLabel = "Середнє за період";
+                }
+                else if (_simulationResults.ContainsKey("24-HR") && _simulationResults["24-HR"].Any())
+                {
+                    dataPointsToUse = _simulationResults["24-HR"];
+                    periodLabel = "Середнє за 24 години";
+                }
+                else if (_simulationResults.ContainsKey("3-HR") && _simulationResults["3-HR"].Any())
+                {
+                    dataPointsToUse = _simulationResults["3-HR"];
+                    periodLabel = "Середнє за 3 години";
+                }
+                else if (_simulationResults.ContainsKey("1-HR") && _simulationResults["1-HR"].Any())
+                {
+                    dataPointsToUse = _simulationResults["1-HR"];
+                    periodLabel = "Середнє за 1 годину";
+                }
+            }
+
+            if (dataPointsToUse == null || !dataPointsToUse.Any())
+            {
+                PopupTitle = "Власний Рецептор";
+                PopupContent = $"ID: {feature["receptor_id"]}\nX: {rx:F0}\nY: {ry:F0}\n\n⚠️ Немає даних для відображення.";
+                IsPopupVisible = true;
+                return;
+            }
+
+            // Шукаємо найближчу точку з результатами
+            double bestDistSq = double.MaxValue;
+            double bestConc = 0.0;
+            double maxConc = dataPointsToUse.Max(p => p.Concentration);
+
+            foreach (var dp in dataPointsToUse)
+            {
+                double dx = dp.Point.X - rx;
+                double dy = dp.Point.Y - ry;
+                double distSq = dx * dx + dy * dy;
+                if (distSq < bestDistSq)
+                {
+                    bestDistSq = distSq;
+                    bestConc = dp.Concentration;
+                }
+            }
+
+            double distance = Math.Sqrt(bestDistSq);
+            double relative = maxConc > 0 ? bestConc / maxConc : 0.0;
+
+            string safety;
+            if (relative <= 0.2)
+                safety = "Безпечно (низький рівень)";
+            else if (relative <= 0.6)
+                safety = "Помірний вплив";
+            else
+                safety = "Небезпечно (високий рівень)";
+
+            PopupTitle = "Власний Рецептор";
+            var sb = new StringBuilder();
+            sb.AppendLine($"ID: {feature["receptor_id"]}");
+            sb.AppendLine($"Координати: X={rx:F0}, Y={ry:F0}");
+            sb.AppendLine($"");
+            sb.AppendLine($"Період: {periodLabel}");
+            sb.AppendLine($"Концентрація: {bestConc:F3} µg/m³");
+            sb.AppendLine($"Відстань до найближчої точки: {distance:F0} м");
+            sb.AppendLine($"Відносно максимуму: {(relative * 100.0):F1}%");
+            sb.AppendLine($"");
+            sb.AppendLine($"Оцінка: {safety}");
+
+            PopupContent = sb.ToString();
+            IsPopupVisible = true;
         }
     }
 }
