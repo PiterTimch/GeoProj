@@ -1081,7 +1081,6 @@ namespace GeoProj.ViewModels
             }
             else
             {
-                // Якщо період не вибрано, беремо перший доступний
                 if (_simulationResults.ContainsKey("PERIOD") && _simulationResults["PERIOD"].Any())
                 {
                     dataPointsToUse = _simulationResults["PERIOD"];
@@ -1112,7 +1111,6 @@ namespace GeoProj.ViewModels
                 return;
             }
 
-            // Шукаємо найближчу точку з результатами
             double bestDistSq = double.MaxValue;
             double bestConc = 0.0;
             double maxConc = dataPointsToUse.Max(p => p.Concentration);
